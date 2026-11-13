@@ -1,0 +1,248 @@
+import { useEffect, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import { useKitchenAnimation } from './animation'
+import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } from 'react-router'
+import { Catalogue } from './Catalogue'
+import { About, Enquiries, EquipmentCart, ExploreVulcan, Gallery, NavigationTools, Rentals, Search } from './Discovery'
+import { paintFlare } from './flare'
+import { EquipmentIcon } from './EquipmentIcon'
+import { KitchenInteractions } from './KitchenInteractions'
+import { PanFood } from './PanFood'
+import { CompanyFooter } from './CompanyFooter'
+import './style.css'
+import './premium.css'
+import './commerce-theme.css'
+
+function Kitchen() {
+  const animation = useKitchenAnimation()
+  const tap = useRef<{ at: number; x: number; y: number } | null>(null)
+  const [muted] = useState(() => {
+    try { return localStorage.getItem('vulcan-kitchen-muted') === 'true' } catch { return false }
+  })
+
+  return <section aria-label="Interactive kitchen" className="kitchen">
+    <div className="scene">
+      <div className="stage">
+        {animation.kitchen ? <img className="kitchen-image" src={animation.kitchen.src} alt="Illustrated Vulcan commercial kitchen" /> :
+          <div className="floorplan">Kitchen artwork unavailable</div>}
+        {animation.kitchen && <KitchenInteractions muted={muted} />}
+        {animation.frames && <>
+          {animation.frames.map((frame, index) => <img key={frame.src} className="chef" src={frame.src} alt="" hidden={index !== animation.frameIndex} />)}
+          <PanFood index={animation.frameIndex} />
+          <div className="chef-speech">
+            <div className="speech-anchor" role="status">{animation.speech && <span className="speech">O for food sake!</span>}</div>
+          </div>
+          {animation.frameIndex >= 8 && animation.frameIndex <= 10 && <div className="flare-anchor" aria-hidden="true">
+            <div className="flare" data-pose={animation.frameIndex + 1}>
+              <canvas width={168} height={282} ref={paintFlare} />
+            </div>
+          </div>}
+          <button type="button" className="chef-target" aria-label="Chef and cooking station. Double-tap, or use Enter to play the fire reaction." aria-disabled={animation.playing} onClick={event => {
+            if (animation.playing) return
+            if (event.detail === 0) {
+              animation.triggerFire()
+              return
+            }
+            const now = performance.now()
+            const previous = tap.current
+            if (previous && now - previous.at <= 450 && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) <= 44) {
+              tap.current = null
+              animation.triggerFire()
+            } else {
+              tap.current = { at: now, x: event.clientX, y: event.clientY }
+            }
+          }} />
+        </>}
+      </div>
+
+    </div>
+  </section>
+}
+
+function EquipmentNavigation() {
+  return <nav className="equipment-nav" aria-label="Main navigation">
+    <NavLink to="/equipment/cooking"><EquipmentIcon kind="cooking" />Cooking Equipment</NavLink>
+    <NavLink to="/equipment/laundry"><EquipmentIcon kind="laundry" />Laundry Equipment</NavLink>
+    <NavigationTools />
+  </nav>
+}
+
+function Wordmark() {
+  return <>
+    <span className="brand-emblem" aria-hidden="true">V</span>
+    <span><strong>ULCAN</strong><small>CATERING EQUIPMENT</small></span>
+  </>
+}
+
+function KitchenHero() {
+  const hero = useRef<HTMLElement>(null)
+  const brand = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    const section = hero.current
+    const logo = brand.current
+    if (!section || !logo) return
+
+    const motion = matchMedia('(prefers-reduced-motion: reduce)')
+    const narrow = matchMedia('(max-width: 680px)')
+    let frame: number | undefined
+    let lastOpacity = ''
+
+    function update() {
+      frame = undefined
+      if (!section || !logo) return
+      const { top, height } = section.getBoundingClientRect()
+      const start = narrow.matches ? 38 : Math.min(68, height * .12)
+      const end = narrow.matches ? 106 : Math.min(245, height * .35)
+      const progress = Math.max(0, Math.min(1, (-top - start) / Math.max(1, end - start)))
+      const opacity = (1 - progress * progress * (3 - 2 * progress)).toFixed(3)
+      if (opacity !== lastOpacity) {
+        logo.style.setProperty('--hero-brand-opacity', opacity)
+        lastOpacity = opacity
+      }
+    }
+
+    function schedule() {
+      if (motion.matches || frame !== undefined) return
+      frame = requestAnimationFrame(update)
+    }
+
+    const updateMotion = () => {
+      if (motion.matches) {
+        if (frame !== undefined) cancelAnimationFrame(frame)
+        frame = undefined
+        logo.style.removeProperty('--hero-brand-opacity')
+        lastOpacity = ''
+      } else {
+        schedule()
+      }
+    }
+
+    updateMotion()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    motion.addEventListener('change', updateMotion)
+    return () => {
+      if (frame !== undefined) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      motion.removeEventListener('change', updateMotion)
+    }
+  }, [])
+
+  return <section className="home-hero" ref={hero} aria-labelledby="hero-brand">
+    <div className="hero-masthead" aria-hidden="true" />
+    <div className="hero-corner" aria-hidden="true" />
+    <div className="hero-nav"><EquipmentNavigation /></div>
+    <div className="hero-brand-track">
+      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment" ref={brand}>
+        <img src={`${import.meta.env.BASE_URL}artwork/vulcan-approved-wordmark.webp`} alt="" width={623} height={233} />
+      </h1>
+    </div>
+    <Kitchen />
+  </section>
+}
+
+const companyFigures = [
+  ['6', 'National Branches'],
+  ['2,500+', 'Completed Projects'],
+  ['12+', 'Countries'],
+  ['3,000+', 'Products'],
+]
+
+function VulcanBrand() {
+  const section = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const element = section.current
+    if (!element || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      element.classList.add('brand-in-view')
+      observer.disconnect()
+    }, { threshold: .15 })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  return <section className="vulcan-brand" ref={section} aria-labelledby="brand-title">
+    <img className="brand-backdrop" src={`${import.meta.env.BASE_URL}artwork/brand-kitchen.webp`} alt="" loading="lazy" />
+    <div className="shell brand-content">
+      <div className="brand-heading">
+        <h2 id="brand-title">The Vulcan Brand</h2>
+        <p>Quality · Commitment · Innovation</p>
+      </div>
+      <div className="brand-cards">
+        <article className="brand-intro">
+          <h3>Designing for Long-Term Success</h3>
+          <p>Vulcan Catering Equipment supplies commercial kitchen and laundry equipment. Explore both ranges to find equipment suited to the way your team works.</p>
+        </article>
+        <dl className="brand-stats" aria-describedby="brand-figure-note">
+          {companyFigures.map(([figure, label]) => <div key={label}>
+            <dt>{label}</dt><dd>{figure}</dd>
+          </div>)}
+        </dl>
+      </div>
+      <p className="brand-figure-note" id="brand-figure-note">Company figures pending confirmation before publication.</p>
+    </div>
+  </section>
+}
+
+function KitchenHome() {
+  const { hash } = useLocation()
+  if (hash === '#equipment' || hash.startsWith('#equipment/')) return <Navigate to={hash.slice(1)} replace />
+
+  return <>
+    <KitchenHero />
+    <VulcanBrand />
+    <ExploreVulcan />
+  </>
+}
+
+function App() {
+  const { pathname } = useLocation()
+  const home = pathname === '/'
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+
+  return <>
+    <a className="skip" href="#main">Skip to content</a>
+    {!home && <header className="top">
+      <div className="shell header-row">
+        <Link className="wordmark" to="/" aria-label="Vulcan Catering Equipment home"><Wordmark /></Link>
+        <EquipmentNavigation />
+      </div>
+    </header>}
+    <main id="main" className={home ? 'home-main' : 'shell commerce-theme'}>
+      <Routes>
+        <Route path="/" element={<KitchenHome />} />
+        <Route path="/equipment/:divisionId?/:brandId?/:categoryId?/:productId?" element={<Catalogue />} />
+        <Route path="/rentals" element={<Rentals />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/enquiries" element={<Enquiries />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/cart" element={<EquipmentCart />} />
+        <Route path="*" element={<section className="catalogue"><h1>Page unavailable</h1><Link className="quote" to="/equipment">Browse equipment</Link></section>} />
+      </Routes>
+    </main>
+    <CompanyFooter />
+  </>
+}
+
+createRoot(document.getElementById('root')!).render(<BrowserRouter useTransitions={false}><App /></BrowserRouter>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

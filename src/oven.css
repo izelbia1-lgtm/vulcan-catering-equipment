@@ -1,0 +1,192 @@
+.middle-oven {
+  position: absolute;
+  z-index: 1;
+  container-type: inline-size;
+}
+
+.middle-oven-art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.oven-hit {
+  position: absolute;
+  z-index: 5;
+  inset: -49% -18% -14% -12%;
+  border-radius: 5px;
+  background: transparent;
+  touch-action: manipulation;
+}
+
+.oven-hit[aria-disabled=true] { cursor: default; }
+.oven-hit:focus-visible { outline-color: #fff2cc; }
+
+.oven-cavity {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2.2cqw;
+  background: linear-gradient(180deg, #22140e 2%, #5f3015 68%, #25170f);
+  box-shadow: inset 0 0 0 1.3cqw #171314, inset 0 0 0 2.1cqw #95795d;
+}
+
+.oven-rear {
+  position: absolute;
+  inset: 7% 4% 8%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 79% 75%, 21% 75%, 0 100%);
+  background:
+    linear-gradient(105deg, #4b2715 0%, #aa622b 14%, transparent 23%),
+    linear-gradient(255deg, #442312 0%, #ad6227 14%, transparent 23%),
+    radial-gradient(ellipse at 50% -10%, #d48937, #673315 54%, #2e1a12 85%);
+}
+
+.oven-rack {
+  position: absolute;
+  inset: 9% 5% 7%;
+  background:
+    linear-gradient(14deg, transparent 24%, #d5934b 25%, transparent 28%, transparent 48%, #c58346 49%, transparent 52%) left / 23% 100% no-repeat,
+    linear-gradient(-14deg, transparent 24%, #d5934b 25%, transparent 28%, transparent 48%, #c58346 49%, transparent 52%) right / 23% 100% no-repeat,
+    repeating-linear-gradient(170deg, #77431c 0 1%, #251a13 1% 9%) bottom / 100% 22% no-repeat;
+}
+
+.oven-light {
+  position: absolute;
+  inset: 4% 3% 4%;
+  background:
+    radial-gradient(ellipse at 50% 2%, #fff6c8 1%, #ffd477e8 9%, #ff9b299e 24%, #ff9b2900 61%),
+    radial-gradient(ellipse at 10% 36%, #ffdf8ba8, transparent 14%),
+    radial-gradient(ellipse at 90% 36%, #ffdf8b9c, transparent 14%);
+}
+
+.oven-hinge {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  perspective: 135cqw;
+  perspective-origin: 50% 100%;
+}
+
+.oven-door {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+}
+
+.oven-door-front, .oven-door-liner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.oven-door-liner {
+  transform: rotateX(180deg);
+  border: 1.5cqw solid #463938;
+  border-radius: 2cqw;
+  background:
+    linear-gradient(98deg, #6e5444, #c7b8b2 15%, #f8d9ac 42%, #a58875 62%, #e3cbbe 83%, #5e4a45);
+  box-shadow: inset 0 0 0 1.3cqw #e2d4ca, inset 0 0 0 2.3cqw #a48d81;
+}
+
+.oven-tray {
+  position: absolute;
+  z-index: 3;
+  inset: auto 9% -8%;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 .9cqw .55cqw #25150bc7);
+}
+.oven-tray img { display: block; width: 100%; height: auto; }
+
+.middle-oven[data-phase=opening] .oven-door,
+.middle-oven[data-phase=open] .oven-door {
+  animation: oven-fold-down 590ms cubic-bezier(.4, 0, .25, 1) both;
+}
+.middle-oven[data-phase=closing] .oven-door {
+  animation: oven-fold-up 590ms cubic-bezier(.4, 0, .25, 1) 450ms both;
+}
+.middle-oven[data-phase=opening] .oven-light,
+.middle-oven[data-phase=open] .oven-light {
+  animation: oven-lamp-on 440ms ease-out 90ms both;
+}
+.middle-oven[data-phase=closing] .oven-light {
+  animation: oven-lamp-off 420ms ease-in 590ms both;
+}
+.middle-oven[data-phase=opening] .oven-tray,
+.middle-oven[data-phase=open] .oven-tray {
+  animation: oven-tray-out 510ms cubic-bezier(.22, .72, .3, 1) 580ms both;
+}
+.middle-oven[data-phase=closing] .oven-tray {
+  animation: oven-tray-in 450ms ease-in-out both;
+}
+
+@keyframes oven-fold-down { from { transform: rotateX(0); } to { transform: rotateX(-111deg); } }
+@keyframes oven-fold-up { from { transform: rotateX(-111deg); } to { transform: rotateX(0); } }
+@keyframes oven-lamp-on { from { opacity: 0; } to { opacity: 1; } }
+@keyframes oven-lamp-off { from { opacity: 1; } to { opacity: 0; } }
+@keyframes oven-tray-out {
+  from { transform: translateY(-26%) scale(.78); opacity: .86; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes oven-tray-in {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  80% { opacity: .82; }
+  to { transform: translateY(-31%) scale(.75); opacity: 0; }
+}
+.middle-oven[data-phase=opening] .oven-tray,
+.middle-oven[data-phase=open] .oven-tray { animation-fill-mode: forwards; opacity: 0; }
+
+.oven-steam {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  transition: opacity 220ms ease-out;
+}
+.middle-oven[data-phase=closing] .oven-steam { opacity: 0; }
+.oven-steam i {
+  position: absolute;
+  bottom: 39%;
+  left: 33%;
+  width: 7%;
+  height: 34%;
+  border-left: 1.35cqw solid #fff3d9;
+  border-radius: 55% 15% 35% 60%;
+  filter: blur(.55cqw);
+  opacity: 0;
+  animation: oven-steam-rise 1030ms ease-out 850ms both;
+}
+.oven-steam i:nth-child(2) { left: 48%; animation-delay: 1030ms; }
+.oven-steam i:nth-child(3) { left: 61%; animation-delay: 1190ms; }
+@keyframes oven-steam-rise {
+  0% { opacity: 0; transform: translateY(18%) scale(.55); }
+  28% { opacity: .59; }
+  100% { opacity: 0; transform: translate(33%, -125%) scale(1.35); }
+}
+
+.oven-ready {
+  position: absolute;
+  z-index: 4;
+  top: 8%;
+  right: 9%;
+  color: #fff8db;
+  font: italic 750 9.8cqw / 1 "Segoe UI", sans-serif;
+  text-shadow: 0 .45cqw .7cqw #5c2b14;
+  opacity: 0;
+  animation: oven-ready-cue 1300ms ease-in-out 850ms both;
+}
+.middle-oven[data-phase=closing] .oven-ready { visibility: hidden; }
+@keyframes oven-ready-cue {
+  0%, 100% { opacity: 0; }
+  20%, 69% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .middle-oven .oven-door, .middle-oven .oven-light, .middle-oven .oven-tray {
+    animation-duration: 0ms !important;
+    animation-delay: 0ms !important;
+  }
+  .oven-steam { display: none; }
+  .oven-ready { animation-delay: 0ms; }
+}

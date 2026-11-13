@@ -1,0 +1,23 @@
+.pan-food, .pan-vapor { pointer-events: none; }
+.pan-vapor-origin { position: absolute; width: 12%; height: 11%; transform: translate(-50%,-100%); }
+.pan-vapor-origin i {
+  position: absolute;
+  bottom: 0;
+  left: 32%;
+  width: 32%;
+  height: 72%;
+  border-left: clamp(1px,.23vw,3px) solid #fff4df;
+  border-radius: 55%;
+  filter: blur(clamp(.45px,.1vw,1px));
+  opacity: 0;
+  animation: pan-steam 2.5s ease-out infinite;
+}
+.pan-vapor-origin i + i { left: 59%; animation-delay: 1.1s; }
+@keyframes pan-steam {
+  0%, 100% { opacity: 0; }
+  27% { opacity: .32; }
+  100% { transform: translate(-35%,-58%) scale(1.3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pan-vapor { display: none; }
+}

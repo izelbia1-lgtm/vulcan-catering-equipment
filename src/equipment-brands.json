@@ -1,0 +1,80 @@
+[
+  {
+    "name": "XLT",
+    "file": "logo-xlt.webp"
+  },
+  {
+    "name": "Vulcan Catering Equipment",
+    "file": "logo-vulcan-catering-equipment.webp"
+  },
+  {
+    "name": "Vulcan Bakery Equipment",
+    "file": "logo-vulcan-bakery-equipment.webp"
+  },
+  {
+    "name": "Scotsman",
+    "file": "logo-scotsman.webp"
+  },
+  {
+    "name": "Robot Coupe",
+    "file": "logo-robot-coupe.webp"
+  },
+  {
+    "name": "Middleby",
+    "file": "logo-middleby.webp"
+  },
+  {
+    "name": "Metos",
+    "file": "logo-metos.webp"
+  },
+  {
+    "name": "Lavezini",
+    "file": "logo-lavezini.webp"
+  },
+  {
+    "name": "Lainox",
+    "file": "logo-lainox.webp"
+  },
+  {
+    "name": "JIPA International",
+    "file": "logo-jipa-international.webp"
+  },
+  {
+    "name": "Inferno",
+    "file": "logo-inferno.webp"
+  },
+  {
+    "name": "HOUNÖ",
+    "file": "logo-houno.webp"
+  },
+  {
+    "name": "CookTek",
+    "file": "logo-cooktek.webp"
+  },
+  {
+    "name": "Comenda",
+    "file": "logo-comends.webp"
+  },
+  {
+    "name": "Cambro",
+    "file": "logo-cambro.webp"
+  },
+  {
+    "name": "Bonnet",
+    "file": "logo-bonnet.webp"
+  },
+  {
+    "name": "Berto’s",
+    "file": "logo-bertos.webp"
+  },
+  {
+    "name": "Miele",
+    "file": "miele.webp",
+    "href": "/equipment/laundry/miele"
+  },
+  {
+    "name": "Sharing",
+    "file": "sharing.webp",
+    "href": "/equipment/laundry/sharing"
+  }
+]

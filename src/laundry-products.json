@@ -1,0 +1,949 @@
+[
+  {
+    "page": 5,
+    "brand": "miele",
+    "category": "washing-machines",
+    "name": "11 kg Fully Automatic Washing Machine",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PWM 511 [EL DP DD]",
+        "specs": [
+          "Washing capacity: 11KG",
+          "Drum volume: 100L",
+          "Drum size: 370 mm door opening",
+          "Material: Stainless steel Honeycomb drum",
+          "Spin speed: 1,100 rpm",
+          "Electrical Supply: 3 Phase AC - 50/60Hz",
+          "Voltage: 400 V",
+          "Electric heating: 7.95 kW",
+          "Dimension: 1020 H × 704 W × 845 D mm",
+          "Weight: 148 kg net / 161 kg gross"
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 100L, load size 11kg",
+      "14% less water consumption and 50% less energy consumption",
+      "Maximum user convenience with colour touch display - M Touch Pro",
+      "Perfect spinning results - residual moisture 50%², g-factor 370.",
+      "Connected for the future using LAN and WIFI"
+    ]
+  },
+  {
+    "page": 6,
+    "brand": "miele",
+    "category": "washing-machines",
+    "name": "14 kg Fully Automatic Washing Machine",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PWM 514 [EL DV DD] IG",
+        "specs": [
+          "Washing capacity: 14KG",
+          "Drum volume: 130L",
+          "Door opening: 415mm",
+          "Spin speed: 1,300 rpm",
+          "Electrical Supply: 3 Phase AC - 50Hz",
+          "Voltage: 400 V",
+          "Electric heating: 9 kW",
+          "Dimension: 1350 H × 799 W × 995 D mm",
+          "Weight: 276 kg net / 295 kg gross"
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 130L, load size 14kg",
+      "14% less water consumption and 17% less energy consumption",
+      "Maximum user convenience with colour touch display - M Touch Pro",
+      "Simple and safe operation thanks to automatic door lock.",
+      "Connected for the future using LAN and WIFI"
+    ]
+  },
+  {
+    "page": 7,
+    "brand": "miele",
+    "category": "washing-machines",
+    "name": "20 kg Professional Washing Machine",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PWM 520 [EL DV DD] IG",
+        "specs": [
+          "Washing capacity: 20KG",
+          "Drum volume: 180L",
+          "Door opening: 415mm",
+          "Spin speed: 950 rpm",
+          "Electrical Supply: 3 Phase N AC - 50Hz",
+          "Voltage: 400 V",
+          "Electric heating: 15 kW",
+          "Dimension: 1450 H × 924 W × 935 D mm",
+          "Weight: 389 kg net / 409 kg gross"
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 180L, load size 20kg",
+      "14% less water consumption and 17% less energy consumption",
+      "Maximum user convenience with colour touch display - M Touch Pro",
+      "Simple and safe operation thanks to automatic door lock.",
+      "Connected for the future using LAN and WIFI"
+    ]
+  },
+  {
+    "page": 8,
+    "brand": "miele",
+    "category": "washing-machines",
+    "name": "27 kg Professional Washing Machine",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PWM 927 [EL DV DD]",
+        "specs": [
+          "Washing capacity: 27KG",
+          "Drum volume: 240L",
+          "Door opening: 415mm",
+          "Spin speed: 1100 rpm",
+          "Electrical Supply: 3 Phase N AC - 50Hz",
+          "Voltage: 400 V",
+          "Electric heating: 24 kW",
+          "Dimension: 1646 H × 1090 W × 1226 D mm",
+          "Weight: 643 kg net / 700 kg gross"
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 240L, load size 27kg",
+      "19% less water consumption and 40% less energy consumption",
+      "Material - Stainless Steel with Honeycomb drum.",
+      "Short subsequent drying thanks to BoostSpin.",
+      "Ideal operation thanks to colour touch display - M Touch Pro Plus",
+      "Connected for the future using LAN and WIFI"
+    ]
+  },
+  {
+    "page": 9,
+    "brand": "miele",
+    "category": "stacked-units",
+    "name": "Professional Washer-Dryer Stack",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDW 909 [EL DP DD] SST",
+        "specs": [
+          "Washer extractor capacity: 9kg",
+          "Tumble dryer load capacity: 9kg",
+          "Washer Drum volume: 80L",
+          "Tumble dryer Drum volume: 180L",
+          "Washer door opening: 370mm",
+          "Dryer door opening: 440mm",
+          "Electrical: - Washer: 3 AC 440V 60Hz - 16Amps - Dryer: 3N AC 400V 50Hz - 16Amps",
+          "Electric heating: 7.95 kW",
+          "Dimension: 1940H × 692 W × 761 D mm",
+          "Weight: 208 kg net / 232 kg gross"
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 80L and /or 180L, load size 2 x 9.0kg.",
+      "18% less water consumption and 45% less energy consumption.",
+      "Ergonomic- centred M Touch Pro (Plus) control unit.",
+      "High laundry throughput - very short programme cycles.",
+      "Connected for the future using LAN and WIFI"
+    ]
+  },
+  {
+    "page": 10,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Heat-Pump SlimLine Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 511 SL ROP [EL IGS]",
+        "specs": [
+          "Drying capacity: 8 to 11KG",
+          "Drum volume: 200L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel",
+          "Electrical: 3N AC, 400V 50Hz - 16A",
+          "Heater Rating: 6.40 kW",
+          "Dimension: 1800 H × 711 W × 1075 D mm",
+          "Weight: 192.7kg Net - 206kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 200L, load size 8 to 11kg.",
+      "60% less energy consumption than vented dryers.",
+      "Very easy installation - only 711mm wide..",
+      "Easy to move - direct access underneath.",
+      "Shortest cycles thanks to diagnol air flow."
+    ]
+  },
+  {
+    "page": 11,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Heat-Pump SlimLine Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 516 SL ROP [EL IGS]",
+        "specs": [
+          "Drying capacity: 12 to 16KG",
+          "Drum volume: 300L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel",
+          "Electrical: 3N AC, 400V 50/60Hz - 25A",
+          "Heater Rating: 13.5 kW",
+          "Dimension: 1800 H × 711 W × 1089 D mm",
+          "Weight: 145.7kg Net - 159kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 300L, load size 12 to 16kg.",
+      "Very easy installation - only 711mm wide..",
+      "Easy to move - direct access underneath.",
+      "Shortest cycles thanks to diagnol air flow.",
+      "Precision drying of all fabrics - PerfectDry System."
+    ]
+  },
+  {
+    "page": 12,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Professional Vented Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 514 ROP [EL]",
+        "specs": [
+          "Drying capacity: 10 to 14KG",
+          "Drum volume: 250L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel Honeycomb drum",
+          "Electrical: 3N AC, 400V 50/60Hz - 25A",
+          "Heater Rating: 13.5 kW",
+          "Dimension: 1400 H × 906 W × 852 D mm",
+          "Weight: 160.4kg Net - 172kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 250L, load size 10 to 14kg.",
+      "Unique gentle fabric care - honeycomb drum.",
+      "Greatest energy effeciency thanks to Air Recycling.",
+      "Connected for the future using LAN and WiFi.",
+      "Precision drying of all fabrics - PerfectDry System."
+    ]
+  },
+  {
+    "page": 13,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Professional Vented Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 522 ROP [EL]",
+        "specs": [
+          "Drying capacity: 16 to 22KG",
+          "Drum volume: 400L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel Honeycomb drum",
+          "Electrical: 3N AC, 400V 50/60Hz - 50A",
+          "Heater Rating: 22.5 kW",
+          "Dimension: 1400 H × 906 W × 1162 D mm",
+          "Weight: 198.9kg Net - 213kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 400L, load size 16 to 22kg.",
+      "Unique gentle fabric care - honeycomb drum.",
+      "Greatest energy effeciency thanks to Air Recycling.",
+      "Connected for the future using LAN and WiFi.",
+      "Precision drying of all fabrics - PerfectDry System."
+    ]
+  },
+  {
+    "page": 14,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Professional Vented Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 528 ROP [EL]",
+        "specs": [
+          "Drying capacity: 20 to 28KG",
+          "Drum volume: 500L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel Honeycomb drum",
+          "Electrical: 3N AC, 400V 50/60Hz - 50A",
+          "Heater Rating: 27 kW",
+          "Dimension: 1640 H × 1206 W × 1019 D mm",
+          "Weight: 243.3kg Net - 258kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 500L, load size 20 to 28kg.",
+      "Unique gentle fabric care - honeycomb drum.",
+      "Greatest energy effeciency thanks to Air Recycling.",
+      "Connected for the future using LAN and WiFi.",
+      "Precision drying of all fabrics - PerfectDry System."
+    ]
+  },
+  {
+    "page": 15,
+    "brand": "miele",
+    "category": "tumble-dryers",
+    "name": "Professional Vented Dryer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PDR 544 ROP [EL]",
+        "specs": [
+          "Drying capacity: 32 to 44KG",
+          "Drum volume: 800L",
+          "Door Opening: 520 mm",
+          "Material: Stainless steel Honeycomb drum",
+          "Electrical: 3N AC, 400V 50/60Hz - 63A",
+          "Heater Rating: 36 kW",
+          "Dimension: 1640 H × 1206 W × 1385 D mm",
+          "Weight: 294.3kg Net - 312kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Drum volume 800L, load size 32 to 44kg.",
+      "Unique gentle fabric care - honeycomb drum.",
+      "Greatest energy effeciency thanks to Air Recycling.",
+      "Connected for the future using LAN and WiFi.",
+      "Precision drying of all fabrics - PerfectDry System."
+    ]
+  },
+  {
+    "page": 16,
+    "brand": "miele",
+    "category": "roller-irons",
+    "name": "Rotary Ironer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PRI 210 [EL STW AB]",
+        "specs": [
+          "Performance 23.5 kg/h",
+          "Roller Diameter 210 mm",
+          "Working width 1000 mm",
+          "Heating Type: Electric",
+          "Electrical: 3N AC, 400V 50/60Hz - 16A",
+          "Heater Rating: 4.5 kW",
+          "Dimension: 1032 H × 1579 W × 476 D mm",
+          "Weight: 122kg Net - 136kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Performance 23.5 kg/h, roller diameter 210mm, working width 1000mm.",
+      "Ideal egonomics - height adjustable and optional plinth.",
+      "State-of-the-art controls - Touch display.",
+      "Selection of the most important settings - favourite programmes.",
+      "Iron Cover: ARAMID needle-felt cloth",
+      "Perfect rotary ironing performance - flexibly positioned heater plate."
+    ]
+  },
+  {
+    "page": 17,
+    "brand": "miele",
+    "category": "roller-irons",
+    "name": "Rotary Ironer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PRI 214 [EL STW]",
+        "specs": [
+          "Performance 33 kg/h",
+          "Roller Diameter 210 mm",
+          "Working width 1400 mm",
+          "Heating Type: Electric",
+          "Electrical: 3N AC, 400V 50/60Hz - 16A",
+          "Heater Rating: 6.5 kW",
+          "Dimension: 1032 H × 1979 W × 650 D mm",
+          "Weight: 140kg Net - 155kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Performance 33 kg/h, roller diameter 210mm, working width 1400mm.",
+      "Ideal egonomics - height adjustable and optional plinth.",
+      "State-of-the-art controls - Touch display.",
+      "Selection of the most important settings - favourite programmes.",
+      "Iron Cover: ARAMID needle-felt cloth",
+      "Perfect rotary ironing performance - flexibly positioned heater plate."
+    ]
+  },
+  {
+    "page": 18,
+    "brand": "miele",
+    "category": "roller-irons",
+    "name": "Rotary Ironer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "PRI 318 [EL STW]",
+        "specs": [
+          "Performance 87 kg/h",
+          "Roller Diameter 300 mm",
+          "Working width 1750 mm",
+          "Heating Type: Electric",
+          "Electrical: 3N AC, 400V 50/60Hz - 35A",
+          "Heater Rating: 17 kW",
+          "Dimension: 1110 H × 2469 W × 1377 D mm",
+          "Weight: 344kg Net - 421kg Gross."
+        ]
+      }
+    ],
+    "features": [
+      "Performance 87 kg/h, roller diameter 300mm, working width 1750mm.",
+      "Ideal egonomics - height adjustable and optional plinth.",
+      "State-of-the-art controls - Touch display.",
+      "Selection of the most important settings - favourite programmes.",
+      "Iron Cover: ARAMID needle-felt cloth",
+      "Perfect rotary ironing performance - flexibly positioned heater plate."
+    ]
+  },
+  {
+    "page": 19,
+    "brand": "sharing",
+    "category": "washing-machines",
+    "name": "High Speed Washer Extractor",
+    "photos": 2,
+    "models": [
+      {
+        "model": "SWE12S",
+        "specs": [
+          "Washing capacity: 13 kg",
+          "Drum volume: 137 L",
+          "Dimensions: 896 × 948 × 1520 mm"
+        ]
+      },
+      {
+        "model": "SWE15S",
+        "specs": [
+          "Washing capacity: 16 kg",
+          "Drum volume: 162 L",
+          "Dimensions: 896 × 1018 × 1520 mm"
+        ]
+      },
+      {
+        "model": "SWE20S",
+        "specs": [
+          "Washing capacity: 20 kg",
+          "Drum volume: 211 L",
+          "Dimensions: 896 × 1158 × 1520 mm"
+        ]
+      },
+      {
+        "model": "SWE25S",
+        "specs": [
+          "Washing capacity: 25 kg",
+          "Drum volume: 251 L",
+          "Dimensions: 1000 × 1120 × 1526 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 20,
+    "brand": "sharing",
+    "category": "washing-machines",
+    "name": "30 kg Fully Automatic Washer Extractor (Soft Mount)",
+    "photos": 1,
+    "models": [
+      {
+        "model": "SWE30S",
+        "specs": [
+          "Washing capacity: 30KG",
+          "Drum volume: 298L",
+          "Drum size: 780*625mm",
+          "Material: Stainless steel 304",
+          "Washing speed: 40RPM",
+          "High extraction speed: 760RPM",
+          "Voltage: 380V,50HZ,3 Phases",
+          "Motor power: 3.5KW",
+          "Electric heating: 21KW",
+          "Dimension: 1000*1200*1526mm",
+          "Weight: 720KG"
+        ]
+      }
+    ],
+    "features": []
+  },
+  {
+    "page": 21,
+    "brand": "sharing",
+    "category": "washing-machines",
+    "name": "Fully Automatic Washer Extractor (Soft Mount)",
+    "photos": 2,
+    "models": [
+      {
+        "model": "XGQ-50",
+        "specs": [
+          "Washing capacity: 50",
+          "Drum volume: 515",
+          "Dimensions: 1650 × 1670 × 1980 mm"
+        ]
+      },
+      {
+        "model": "XGQ-100",
+        "specs": [
+          "Washing capacity: 100",
+          "Drum volume: 984",
+          "Dimensions: 1800 × 2000 × 2250 mm"
+        ]
+      },
+      {
+        "model": "XGQ-100T",
+        "specs": [
+          "Washing capacity: 100",
+          "Drum volume: 984",
+          "Dimensions: 1880 × 2010 × 2350 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 22,
+    "brand": "sharing",
+    "category": "washing-machines",
+    "name": "Coin Operated Washer Extractor",
+    "photos": 1,
+    "models": [
+      {
+        "model": "SWE12H",
+        "specs": [
+          "Washing capacity: 13 kg",
+          "Drum volume: 137 L",
+          "Dimensions: 820 × 990 × 1450 mm"
+        ]
+      },
+      {
+        "model": "SWE15H",
+        "specs": [
+          "Washing capacity: 16 kg",
+          "Drum volume: 162 L",
+          "Dimensions: 820 × 1060 × 1450 mm"
+        ]
+      },
+      {
+        "model": "SWE20H",
+        "specs": [
+          "Washing capacity: 20 kg",
+          "Drum volume: 211 L",
+          "Dimensions: 820 × 1200 × 1450 mm"
+        ]
+      },
+      {
+        "model": "SWE25H",
+        "specs": [
+          "Washing capacity: 25 kg",
+          "Drum volume: 251 L",
+          "Dimensions: 920 × 1120 × 1542 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 23,
+    "brand": "sharing",
+    "category": "tumble-dryers",
+    "name": "Fully Automatic Tumble Dryer",
+    "photos": 2,
+    "models": [
+      {
+        "model": "HG-50",
+        "specs": [
+          "Capacity: 50",
+          "Drum volume: 1035",
+          "Dimensions: 1220 × 1620 × 2150 mm"
+        ]
+      },
+      {
+        "model": "HG-100",
+        "specs": [
+          "Capacity: 100",
+          "Drum volume: 2041",
+          "Dimensions: 1620 × 1950 × 2550 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 24,
+    "brand": "sharing",
+    "category": "tumble-dryers",
+    "name": "Commercial Tumble Dryer",
+    "photos": 2,
+    "models": [
+      {
+        "model": "STD-15",
+        "specs": [
+          "Capacity: 15 kg",
+          "Drum volume: 301 L",
+          "Dimensions: 800 × 1100 × 1818 mm"
+        ]
+      },
+      {
+        "model": "STD-25",
+        "specs": [
+          "Capacity: 25 kg",
+          "Drum volume: 489 L",
+          "Dimensions: 1024 × 1160 × 2070 mm"
+        ]
+      },
+      {
+        "model": "STD-35",
+        "specs": [
+          "Capacity: 35 kg",
+          "Drum volume: 627 L",
+          "Dimensions: 1024 × 1360 × 2070 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 25,
+    "brand": "sharing",
+    "category": "stacked-units",
+    "name": "Stacked Washer & Dryer",
+    "photos": 2,
+    "models": [
+      {
+        "model": "SWD12H",
+        "specs": [
+          "Washing / drying capacity: 12 kg / 12 kg",
+          "Dimensions: 813 × 1120 × 2120 mm"
+        ]
+      },
+      {
+        "model": "SWD15H",
+        "specs": [
+          "Washing / drying capacity: 15 kg / 16 kg",
+          "Dimensions: 813 × 1120 × 2120 mm"
+        ]
+      },
+      {
+        "model": "SWD20H",
+        "specs": [
+          "Washing / drying capacity: 20 kg / 22 kg",
+          "Dimensions: 817 × 1420 × 2120 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 26,
+    "brand": "sharing",
+    "category": "stacked-units",
+    "name": "Stacked Tumble Dryer",
+    "photos": 2,
+    "models": [
+      {
+        "model": "SSD-15",
+        "specs": [
+          "Capacity: 15 × 2",
+          "Drum volume: 303 × 2 L",
+          "Dimensions: 800 × 1100 × 2000 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 27,
+    "brand": "sharing",
+    "category": "steam-presses",
+    "name": "Fully Automatic Utility Steam Press",
+    "photos": 1,
+    "models": [
+      {
+        "model": "LP-01",
+        "specs": [
+          "Steam pressure: 0.4–0.5 MPa",
+          "Dimensions: 1200 × 1400 × 1400 mm"
+        ]
+      },
+      {
+        "model": "LP-02",
+        "specs": [
+          "Steam pressure: 0.4–0.5 MPa",
+          "Dimensions: 1200 × 1400 × 1400 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 28,
+    "brand": "sharing",
+    "category": "roller-irons",
+    "name": "1-Roller 3000 mm Flatwork Ironer (Electric)",
+    "photos": 1,
+    "models": [
+      {
+        "model": "YPI-3000",
+        "specs": [
+          "Length of Roller: 3000mm",
+          "Number of Roller: 1",
+          "Cylinder diameter: 800mm",
+          "Wall thickness of Roller: 4mm",
+          "Cylinder material: SUS 304",
+          "Ironing speed: 0-10m/min",
+          "Voltage: 380V / 50HZ / 3 Phases",
+          "Motor power: 0.75KW",
+          "Electric heating: 32KW",
+          "Dimension: 4240*1200*1300mm",
+          "Total Weight: 1200KG"
+        ]
+      }
+    ],
+    "features": []
+  },
+  {
+    "page": 29,
+    "brand": "sharing",
+    "category": "roller-irons",
+    "name": "2-Roller 3300 mm Flatwork Ironer (Electric)",
+    "photos": 1,
+    "models": [
+      {
+        "model": "YPII – 3300",
+        "specs": [
+          "Length of Roller: 3300mm",
+          "Number of Roller: 2",
+          "Cylinder diameter: 800mm",
+          "Material: SUS304 cylinder and shaft",
+          "Ironing speed: ≤20m/min",
+          "Voltage: 380V / 50HZ / 3 Phases",
+          "Motor power: 1.5KW",
+          "Electric heating: 64KW",
+          "Dimension: 4540*2600*1300mm",
+          "Weight: 2100KG"
+        ]
+      }
+    ],
+    "features": []
+  },
+  {
+    "page": 30,
+    "brand": "sharing",
+    "category": "roller-irons",
+    "name": "3-Roller 3000 mm Flatwork Ironer (Steam)",
+    "photos": 1,
+    "models": [
+      {
+        "model": "YPIII-3000",
+        "specs": [
+          "Length of Roller: 3000mm",
+          "Number of Roller: 3",
+          "Cylinder diameter: 800mm",
+          "Material: SUS304 cylinder and shaft",
+          "Ironing speed: ≤25m/min",
+          "Voltage: 380V,50HZ,3 Phases",
+          "Motor power: 2.2KW",
+          "Steam Consumption: 330kg",
+          "Dimension: 4240*3600*1300mm",
+          "Weight: 3200KG"
+        ]
+      }
+    ],
+    "features": []
+  },
+  {
+    "page": 31,
+    "brand": "sharing",
+    "category": "roller-irons",
+    "name": "Chest Flatwork Ironer",
+    "photos": 1,
+    "models": [
+      {
+        "model": "YPI-3300C",
+        "specs": [
+          "Roller count: 1",
+          "Dimensions: 4865 × 2877 × 2210 mm",
+          "Roller width: 3300 mm",
+          "Roller diameter: 1300 mm"
+        ]
+      },
+      {
+        "model": "YPII-3300C",
+        "specs": [
+          "Roller count: 2",
+          "Dimensions: 4865 × 4545 × 2210 mm",
+          "Roller width: 3300 mm",
+          "Roller diameter: 1300 mm"
+        ]
+      },
+      {
+        "model": "YPIII-3300C",
+        "specs": [
+          "Roller count: 3",
+          "Dimensions: 4866 × 6210 × 2210 mm",
+          "Roller width: 3300 mm",
+          "Roller diameter: 1300 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 32,
+    "brand": "sharing",
+    "category": "feeders",
+    "name": "Vacuum Feeder",
+    "photos": 1,
+    "models": [
+      {
+        "model": "SJ-3000",
+        "specs": [
+          "Maximum feeding width: 3000 mm",
+          "Dimensions: 4450 × 1150 × 1330 mm"
+        ]
+      },
+      {
+        "model": "SJ-3300",
+        "specs": [
+          "Maximum feeding width: 3300 mm",
+          "Dimensions: 4450 × 1150 × 1330 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 33,
+    "brand": "sharing",
+    "category": "feeders",
+    "name": "Fully Automatic Feeder",
+    "photos": 1,
+    "models": [
+      {
+        "model": "ZB-3000",
+        "specs": [
+          "Maximum feeding width: 3000 mm",
+          "Dimensions: 4800 × 2200 × 2420 mm"
+        ]
+      },
+      {
+        "model": "ZB-3300",
+        "specs": [
+          "Maximum feeding width: 3300 mm",
+          "Dimensions: 4800 × 2200 × 2420 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 34,
+    "brand": "sharing",
+    "category": "folders",
+    "name": "Fast Speed Bedsheets Folder",
+    "photos": 2,
+    "models": [
+      {
+        "model": "ZD-3000",
+        "specs": [
+          "Maximum folding width: 3000 mm",
+          "Dimensions: 3723 × 2950 × 1990 mm"
+        ]
+      },
+      {
+        "model": "ZD-3300",
+        "specs": [
+          "Maximum folding width: 3300 mm",
+          "Dimensions: 3723 × 2950 × 1990 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 35,
+    "brand": "sharing",
+    "category": "folders",
+    "name": "Towel Folder",
+    "photos": 1,
+    "models": [
+      {
+        "model": "ZD-1800",
+        "specs": [
+          "Maximum folding size: 1800 × 1200 mm",
+          "Folder and conveyor dimensions: 2100 × 5050 × 1350 mm"
+        ]
+      }
+    ],
+    "technicalTables": 1
+  },
+  {
+    "page": 36,
+    "brand": "sharing",
+    "category": "dry-cleaning-equipment",
+    "name": "Fully Automatic Dry Clean Machine",
+    "photos": 1,
+    "models": [
+      {
+        "model": "GX-8F",
+        "specs": [
+          "Dry load: 8 kg",
+          "Drum volume: 145 L",
+          "Dimensions: 1610 × 1100 × 1700 mm"
+        ]
+      },
+      {
+        "model": "GX-10F",
+        "specs": [
+          "Dry load: 10 kg",
+          "Drum volume: 185 L",
+          "Dimensions: 1610 × 1150 × 1715 mm"
+        ]
+      },
+      {
+        "model": "GX-12F",
+        "specs": [
+          "Dry load: 12 kg",
+          "Drum volume: 215 L",
+          "Dimensions: 1610 × 1290 × 1715 mm"
+        ]
+      },
+      {
+        "model": "GX-16F",
+        "specs": [
+          "Dry load: 16 kg",
+          "Drum volume: 285 L",
+          "Dimensions: 2100 × 1400 × 2300 mm"
+        ]
+      },
+      {
+        "model": "GX-20F",
+        "specs": [
+          "Dry load: 18 kg",
+          "Drum volume: 350 L",
+          "Dimensions: 2100 × 1450 × 2300 mm"
+        ]
+      }
+    ],
+    "technicalTables": 2
+  }
+]
+

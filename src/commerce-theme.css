@@ -1,0 +1,111 @@
+/* Scope the commerce palette to routed pages, including their quote dialogs. */
+#root:has(> .commerce-theme) { background: #17181d; }
+
+.commerce-theme {
+  --ink: #fff;
+  --quiet: #c8c9d0;
+  --red: #ff7671;
+  --commerce-accent: #e52521;
+  --commerce-action: #bd201d;
+  --line: #45464f;
+  --commerce-field: #1b1c22;
+  --commerce-surface: #24252b;
+  --commerce-panel: linear-gradient(145deg, #2b2c33, var(--commerce-surface) 65%);
+  --shadow-card: 0 6px 16px #0003;
+  color: var(--ink);
+  color-scheme: dark;
+}
+
+.commerce-theme :is(.laundry-brand-card, .brand-category-card, .product-card, .equipment-choice,
+.discovery-card, .coming-soon, .catalogue-filters, .spec-list, .search-results > *, dialog) {
+  background: var(--commerce-panel);
+  border-color: var(--line);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+}
+
+.commerce-theme .laundry-masthead {
+  background: radial-gradient(ellipse at 90% 0%, #373941, transparent 70%), #1d1e24;
+  border-color: var(--line);
+  border-bottom-color: var(--commerce-accent);
+  box-shadow: var(--shadow-card);
+}
+.commerce-theme :is(.laundry-masthead p, .laundry-brand-copy > span, .choice-brands) { color: var(--quiet); }
+.commerce-theme :is(.laundry-brand-copy strong, .choice-copy strong) { color: var(--ink); }
+.commerce-theme :is(.brand-card-action, .card-arrow, .discovery-arrow, .eyebrow) { color: var(--red); }
+.commerce-theme .coming-soon { border-left-color: var(--commerce-accent); }
+.commerce-theme :is(.choice-medallion, .coming-soon-label, .discovery-icon) {
+  background: #40272b;
+  color: var(--red);
+  border-color: #77413f;
+}
+
+/* Neutral image wells preserve the original catalogue photography and PDF tables. */
+.commerce-theme :is(.laundry-brand-photo, .category-photo, .card-photo, .detail-photo, .photo-strip button) {
+  background: #d9dbe0;
+  border-color: var(--line);
+}
+.commerce-theme :is(.laundry-brand-photo, .category-photo, .card-photo, .detail-photo) img {
+  background: #fff;
+  border-radius: 5px;
+}
+.commerce-theme .category-photo { padding: 0; }
+.commerce-theme .photo-strip button[aria-pressed=true] { border: 2px solid var(--commerce-accent); }
+.commerce-theme .technical-tables img { background: white; border-color: var(--line); }
+
+.commerce-theme :is(.brand-nav a, input, select, textarea, .save-equipment, .dialog-head button) {
+  background: var(--commerce-field);
+  border: 1px solid #686a76;
+  color: var(--ink);
+}
+.commerce-theme :is(input, textarea)::placeholder { color: var(--quiet); }
+.commerce-theme .brand-nav a[aria-current] { background: #392426; color: #ffaaa6; border-color: var(--commerce-accent); }
+.commerce-theme :is(.brand-nav a, .save-equipment):hover { border-color: var(--red); }
+.commerce-theme :is(.save-equipment, .clear-filters):disabled { color: var(--quiet); }
+.commerce-theme .quote-fields input[readonly] { background: #303139; color: var(--quiet); }
+.commerce-theme dialog::backdrop { background: #0b0c10bf; }
+.commerce-theme .quote { background: var(--commerce-action); color: white; }
+.commerce-theme .quote:hover { background: #ce211e; }
+.commerce-theme :focus-visible { outline-color: #ff7671; }
+
+.commerce-theme :is(a.laundry-brand-card, a.catalogue-tile, a.product-card, a.discovery-card, a.equipment-choice):is(:hover, :focus-visible) {
+  border-color: var(--commerce-accent);
+  box-shadow: 0 9px 20px #0005, 0 0 12px #e5252126;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .commerce-theme :is(a.laundry-brand-card, a.catalogue-tile, a.product-card, a.discovery-card, a.equipment-choice) {
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+  .commerce-theme :is(a.laundry-brand-card, a.catalogue-tile, a.product-card, a.discovery-card, a.equipment-choice):hover {
+    transform: translateY(-3px);
+  }
+}
+.commerce-theme .laundry-brand-copy .brand-card-action { color: var(--red); }
+.commerce-theme .laundry-brand-card { border-bottom-color: #86403e; }
+
+.commerce-theme .catalogue-home {
+  padding-inline: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--commerce-surface);
+  color: var(--ink);
+}
+.commerce-theme .catalogue-home span { color: var(--red); font-size: 1.3rem; }
+.commerce-theme .catalogue-home:hover {
+  border-color: var(--commerce-accent);
+  background: #392426;
+}
+
+.laundry-brand-secondary { margin-top: clamp(28px, 5vw, 58px); }
+.laundry-brand-secondary .laundry-brand-card { min-height: clamp(128px, 18vw, 190px); }
+.laundry-brand-secondary .laundry-brand-copy strong { font-size: clamp(1.4rem, 3vw, 2.3rem); }
+.comparison-card { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.comparison-card > .product-card { flex: 1; }
+.comparison-card > label { display: flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 10px; }
+.comparison-card input { width: 18px; height: 18px; accent-color: var(--commerce-action); }
+.comparison-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.comparison-actions button:disabled { opacity: .65; cursor: default; }
+.comparison-dialog { width: min(960px, calc(100% - 32px)); }
+.comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr)); gap: 16px; }
+.comparison-grid > section { min-width: 0; }
+.comparison-grid select { display: block; width: 100%; min-height: 44px; margin: 4px 0 12px; padding: 6px; border-radius: 6px; }
