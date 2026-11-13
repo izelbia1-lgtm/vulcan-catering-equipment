@@ -32,9 +32,9 @@ h1{margin:0;font-size:clamp(2rem,4vw,3.55rem);font-weight:650;line-height:1.07;l
 .chef-target{z-index:2;touch-action:manipulation;border-radius:22%}
 .chef-target[aria-disabled=true]{cursor:default}
 .chef-speech{z-index:4;pointer-events:none}
-.speech-anchor{position:absolute;left:77%;top:25%;transform:translateY(-100%)}
-.speech{display:inline-block;padding:10px 14px;background:#fff9ea;border:1px solid #c6b69e;border-radius:13px;color:#241c17;font-weight:800;font-size:clamp(.8rem,2vw,1.06rem);box-shadow:0 4px 14px #1e171746;white-space:nowrap}
-.speech::after{content:"";position:absolute;bottom:-5px;left:13px;width:10px;height:10px;background:#fff9ea;border-right:1px solid #c6b69e;border-bottom:1px solid #c6b69e;transform:skewX(-30deg) rotate(45deg)}
+.speech-anchor{position:absolute;left:77%;top:18%;width:max-content}
+.speech{position:relative;display:block;padding:8px 12px;background:#242127;border-radius:12px;color:#fff;font-weight:800;font-size:clamp(.8rem,2vw,1.06rem);line-height:1.25;box-shadow:0 4px 14px #1e171746}
+.speech::after{content:"";position:absolute;right:calc(100% - 1px);bottom:7px;width:9px;height:9px;background:inherit;clip-path:polygon(0 100%,100% 0,100% 78%)}
 .floorplan{position:absolute;inset:0;display:grid;place-items:center;color:#dcd4c8;background:#363331}
 
 h2{margin:0 0 12px;font-size:1.45rem;font-weight:700;letter-spacing:-.025em}

@@ -14,6 +14,7 @@ import { CompanyFooter } from './CompanyFooter'
 import './style.css'
 import './premium.css'
 import './commerce-theme.css'
+import './mobile.css'
 
 function Kitchen() {
   const animation = useKitchenAnimation()

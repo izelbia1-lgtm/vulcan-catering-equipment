@@ -1,0 +1,98 @@
+@media (max-width: 680px) {
+  .hero-nav {
+    inset: 0 8px auto;
+  }
+
+  .hero-nav .equipment-nav,
+  .header-row .equipment-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+
+  :is(.hero-nav, .header-row) .equipment-nav > a {
+    justify-content: center;
+    min-width: 0;
+    padding: 4px;
+    font-size: clamp(.75rem, 3.2vw, .9rem);
+    line-height: 1.15;
+    text-align: center;
+    white-space: normal;
+  }
+
+  :is(.hero-nav, .header-row) .equipment-nav > a .equipment-icon,
+  .hero-nav .equipment-nav a::before {
+    display: none;
+  }
+
+  :is(.hero-nav, .header-row) .navigation-tools {
+    gap: 0;
+  }
+
+  .header-row .equipment-nav {
+    border-top: 1px solid #ffffff22;
+  }
+
+  .commerce-theme :is(h1, h2, .card-copy, .spec-list, .catalogue-path) {
+    overflow-wrap: anywhere;
+  }
+
+  .commerce-theme :is(input:not([type=checkbox]), select, textarea) {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .commerce-theme .photo-strip {
+    flex-wrap: wrap;
+  }
+
+  .commerce-theme :is(.product-detail, .comparison-grid) > * {
+    min-width: 0;
+  }
+
+  .commerce-theme .product-detail :is(.quote, .save-equipment) {
+    margin-bottom: 8px;
+  }
+
+  .commerce-theme .bundle-filters {
+    align-items: stretch;
+  }
+
+  .commerce-theme .technical-tables img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .company-footer :is(.footer-branch a, .footer-information nav a, .footer-contact dd a) {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer-socials a {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 430px) {
+  .commerce-theme :is(.catalogue-grid, .quote-fields) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .commerce-theme .search-product {
+    flex-wrap: wrap;
+    padding: 0 10px 10px;
+  }
+
+  .commerce-theme .search-product .search-result {
+    flex-basis: 100%;
+  }
+
+  .discovery-home .discovery-card strong {
+    overflow-wrap: anywhere;
+  }
+}

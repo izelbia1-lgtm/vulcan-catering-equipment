@@ -550,7 +550,8 @@
     overscroll-behavior-inline: contain;
   }
   .home-hero .scene::-webkit-scrollbar { display: none; }
-  .speech-anchor { left: auto; right: -8%; top: calc(25% + 6px); }
+  .speech-anchor { left: 59%; top: 15%; max-width: 53%; }
+  .speech { padding: 6px 8px; }
   .home-hero .stage { width: 164%; }
   .hero-brand-track { inset: 52px 14px 0; }
   .hero-brand { width: min(69vw,410px); }
