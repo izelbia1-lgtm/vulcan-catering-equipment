@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getCapacityFacet, getFacets, getResults, transferableFilters } from './catalogue-filters'
+import { productCartPath, useCart } from './cart'
 import { EquipmentIcon } from './EquipmentIcon'
 import { catalogueDivisions, catalogueMedia, laundryTypes, type Brand, type Category, type Product, type ProductModel } from './laundry'
 
@@ -53,6 +54,9 @@ function ProductDetails({ product, brand }: { product: Product; brand: string })
   const [params, setParams] = useSearchParams()
   const { state } = useLocation()
   const model = product.models.find(item => item.model === params.get('variant')) ?? product.models[0]
+  const { lines, add } = useCart()
+  const cartPath = productCartPath(`/equipment/laundry/${product.brand}/${product.category}/${product.page}`, product, model.model)
+  const inCart = lines.some(line => line.path === cartPath)
   const [photoIndex, setPhotoIndex] = useState(1)
   const dialog = useRef<HTMLDialogElement>(null)
   return <>
@@ -74,6 +78,7 @@ function ProductDetails({ product, brand }: { product: Product; brand: string })
           </select>
         </div> : <p className="model-number">{model.model}</p>}
         <button className="quote" onClick={() => dialog.current?.showModal()}>Request a Quote <span aria-hidden="true">↗</span></button>
+        <button className="save-equipment" type="button" disabled={inCart} onClick={() => add(cartPath)}>{inCart ? 'Saved to cart' : 'Add to Cart'}</button>
         <h3>Technical specifications</h3>
         <ul className="spec-list">{model.specs.map(spec => <li key={spec}>{spec}</li>)}</ul>
         {product.features?.length ? <>
