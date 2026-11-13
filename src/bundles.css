@@ -27,6 +27,12 @@
 .order-cart-line .search-result { padding: 0; margin-bottom: 10px; }
 .order-cart-line .search-result img { border-radius: 5px; background: #fff; }
 .order-cart-line .bundle-actions { margin-top: 10px; }
+.cart-bundle-group h2 { margin: 0; font-size: 1.15rem; }
+.cart-bundle-components { margin-block: 12px; }
+.cart-bundle-components li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding-block: 8px; border-top: 1px solid var(--line); }
+.cart-bundle-components small { display: block; color: var(--quiet); }
+.cart-bundle-components .order-quantity { flex-shrink: 0; }
+.cart-bundle-group > p { font-weight: 700; color: var(--red); }
 .order-cart-line details { margin-block: 8px; }
 .order-cart-line details ul { padding-left: 1.3rem; }
 .order-cart-totals dl { margin-block: 14px; }

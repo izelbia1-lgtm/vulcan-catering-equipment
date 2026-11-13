@@ -23,11 +23,11 @@ export function AddProductToCart({ product, model, quantity = 1 }: {
   </div>
 }
 
-export function Quantity({ value, onChange, label }: {
-  value: number; onChange: (quantity: number) => void; label: string
+export function Quantity({ value, onChange, label, min = 1 }: {
+  value: number; onChange: (quantity: number) => void; label: string; min?: number
 }) {
   return <div className="order-quantity" role="group" aria-label={label}>
-    <button type="button" className="save-equipment" disabled={value === 1} onClick={() => onChange(value - 1)} aria-label={`Decrease ${label}`}>−</button>
+    <button type="button" className="save-equipment" disabled={value === min} onClick={() => onChange(value - 1)} aria-label={`Decrease ${label}`}>−</button>
     <output aria-label={label}>{value}</output>
     <button type="button" className="save-equipment" disabled={value === maxQuantity} onClick={() => onChange(value + 1)} aria-label={`Increase ${label}`}>+</button>
   </div>

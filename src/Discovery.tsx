@@ -179,39 +179,72 @@ const cartItems = new Map<string, { name: string; image: string; bundle?: Bundle
 ])
 
 export function EquipmentCart() {
-  const { lines, setQuantity } = useCart()
+  const { lines, setQuantity, updateBundle, removeBundle } = useCart()
   const [requestQuote, setRequestQuote] = useState(false)
   const items = lines.flatMap(line => {
     const item = cartItems.get(line.path)
     return item ? [{ ...line, ...item }] : []
   })
-  const subtotal = items.reduce((total, item) => total + (item.bundle?.purchaseCents ?? 0) * item.quantity, 0)
+  const packages = items.flatMap(item => {
+    const { bundle, bundleKey } = item
+    if (!bundle || !bundleKey) return []
+    const equipment = bundle.equipment.map(component => ({
+      ...component, selected: item.equipment?.[component.name] ?? component.quantity,
+    }))
+    const customised = equipment.some(component => component.selected !== component.quantity)
+    return [{ ...item, bundleKey, equipment, customised, cents: customised ? undefined : bundle.purchaseCents }]
+  })
+  const products = items.filter(item => !item.bundle)
+  const subtotal = packages.reduce((total, item) => total + (item.cents ?? 0), 0)
   const vat = Math.round(subtotal * VAT_PERCENT / 100)
-  const hasQuoteOnly = items.some(item => !item.bundle)
-  const quoteItems = items.map(item => `${item.quantity} × ${item.name}${item.bundle?.purchaseCents !== undefined
-    ? ` (${money(item.bundle.purchaseCents)} each excl. VAT, advertised and subject to confirmation)`
-    : ' (price on request)'}`)
+  const hasQuoteOnly = products.length > 0 || packages.some(item => item.cents === undefined)
+  const quoteItems = [
+    ...packages.flatMap((item, index) => [
+      `Bundle ${index + 1} — ${item.name}`,
+      ...item.equipment.map(component =>
+        `  ${component.selected} × ${component.name}${component.spec ? ' · ' + component.spec : ''}${component.selected === 0 ? ' (removed)' : ''}`),
+      item.cents === undefined ? 'Updated quote required' : `Advertised bundle subtotal: ${money(item.cents)} excl. VAT, subject to confirmation`,
+      '',
+    ]),
+    ...(products.length ? ['Individual products', ...products.map(item => `${item.quantity} × ${item.name} (price on request)`)] : []),
+  ]
 
   return <DiscoveryPage title="Equipment cart" intro="Review quantities and request a purchase quote from Vulcan.">
     {items.length === 0 ? <p>Your trolley is empty.</p> : <>
       <div className="order-cart-layout">
-        <div className="search-results">{items.map(({ path, quantity, name, image, bundle }) =>
+        <div className="search-results">
+          {packages.map(({ path, name, image, bundleKey, equipment, customised, cents }, index) =>
+            <article className="order-cart-line cart-bundle-group" key={bundleKey}>
+              <Link className="search-result" to={path}><img src={image} alt="" /><h2>Bundle {index + 1} — {name}</h2></Link>
+              <ul className="cart-bundle-components">
+                {equipment.map(component => <li key={component.name}>
+                  <div><strong>{component.name}</strong>{component.spec && <small>{component.spec}</small>}</div>
+                  <Quantity min={0} value={component.selected} label={`quantity for ${component.name} in Bundle ${index + 1}`}
+                    onChange={value => updateBundle(bundleKey, Object.fromEntries(equipment.map(item =>
+                      [item.name, item.name === component.name ? value : item.selected])))} />
+                </li>)}
+              </ul>
+              <p role="status">{cents === undefined ? 'Updated quote required' : `Bundle subtotal ${money(cents)} excl. VAT`}</p>
+              <div className="bundle-actions">
+                {customised && <button type="button" className="save-equipment" onClick={() => updateBundle(bundleKey, {})}>Restore original bundle</button>}
+                <button type="button" className="save-equipment" onClick={() => removeBundle(bundleKey)}>Remove Bundle {index + 1}</button>
+              </div>
+            </article>)}
+          {products.length > 0 && <section className="order-cart-line">
+            <h2>Individual products</h2>
+            {products.map(({ path, quantity, name, image }) =>
           <article className="order-cart-line" key={path}>
             <Link className="search-result" to={path}><img src={image} alt="" /><strong>{name}</strong></Link>
-            {bundle?.purchaseCents !== undefined ? <>
-              <p>{money(bundle.purchaseCents)} each excl. VAT · <strong>{money(bundle.purchaseCents * quantity)}</strong></p>
-              <details><summary>Included equipment for {quantity} {quantity === 1 ? 'bundle' : 'bundles'}</summary>
-                <ul>{bundle.equipment.map(item => <li key={item.name}>{item.quantity * quantity} × {item.name}{item.spec && ` · ${item.spec}`}</li>)}</ul>
-              </details>
-            </> : <p>Price on request</p>}
+            <p>Price on request</p>
             <div className="bundle-actions">
               <Quantity label={`quantity for ${name}`} value={quantity} onChange={value => setQuantity(path, value)} />
               <button type="button" className="save-equipment" aria-label={`Remove ${name}`} onClick={() => setQuantity(path, 0)}>Remove</button>
             </div>
-          </article>)}</div>
+          </article>)}</section>}
+        </div>
         <section className="bundle-panel order-cart-totals" aria-label="Estimated trolley totals">
-          <h2>{hasQuoteOnly ? 'Estimate for priced items' : 'Order estimate'}</h2>
-          {hasQuoteOnly && <p>Items marked “Price on request” are excluded from this estimate. Vulcan can quote for your full trolley.</p>}
+          <h2>{hasQuoteOnly ? subtotal > 0 ? 'Estimate for priced items' : 'Quote required' : 'Order estimate'}</h2>
+          {hasQuoteOnly && <p>Vulcan will confirm pricing for customised bundles and items marked “Price on request”.</p>}
           {subtotal > 0 && <>
             <dl aria-live="polite">
               <div><dt>Subtotal excl. VAT</dt><dd>{money(subtotal)}</dd></div>
