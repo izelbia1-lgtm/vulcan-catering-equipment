@@ -5,7 +5,7 @@ import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } fr
 import { CartProvider } from './cart'
 import { EquipmentBundles } from './EquipmentBundles'
 import { Catalogue } from './Catalogue'
-import { About, Enquiries, EquipmentCart, ExploreVulcan, Gallery, NavigationTools, Rentals, Search } from './Discovery'
+import { ComingSoon, Enquiries, EquipmentCart, ExploreVulcan, NavigationTools, Search } from './Discovery'
 import { paintFlare } from './flare'
 import { EquipmentIcon } from './EquipmentIcon'
 import { KitchenInteractions } from './KitchenInteractions'
@@ -15,6 +15,7 @@ import './style.css'
 import './premium.css'
 import './commerce-theme.css'
 import './mobile.css'
+import './black-theme.css'
 
 function Kitchen() {
   const animation = useKitchenAnimation()
@@ -33,7 +34,7 @@ function Kitchen() {
           {animation.frames.map((frame, index) => <img key={frame.src} className="chef" src={frame.src} alt="" hidden={index !== animation.frameIndex} />)}
           <PanFood index={animation.frameIndex} />
           <div className="chef-speech">
-            <div className="speech-anchor" role="status">{animation.speech && <span className="speech">O for food sake!</span>}</div>
+            <div className="speech-anchor" role="status">{animation.speech && <span className="speech">OH FOR FOOD SAKE!</span>}</div>
           </div>
           {animation.frameIndex >= 8 && animation.frameIndex <= 10 && <div className="flare-anchor" aria-hidden="true">
             <div className="flare" data-pose={animation.frameIndex + 1}>
@@ -147,13 +148,50 @@ function KitchenHero() {
 }
 
 const companyFigures = [
-  ['6', 'National Branches'],
-  ['2,500+', 'Completed Projects'],
-  ['12+', 'Countries'],
-  ['3,000+', 'Products'],
-]
+  [6, '', 'National Branches'],
+  [2500, '+', 'Completed Projects'],
+  [12, '+', 'Countries'],
+  [3000, '+', 'Products'],
+] as const
+const figureFormat = new Intl.NumberFormat('en-US')
 
 function VulcanBrand() {
+  const statistics = useRef<HTMLDListElement>(null)
+  const [progress, setProgress] = useState(1)
+
+  useEffect(() => {
+    const section = statistics.current
+    const motion = matchMedia('(prefers-reduced-motion: reduce)')
+    if (!section || motion.matches || !('IntersectionObserver' in window)) return
+    setProgress(0)
+    let frame = 0
+    let started: number | undefined
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || motion.matches) return
+      observer.disconnect()
+      const animate = (now: number) => {
+        started ??= now
+        const time = Math.min((now - started) / 1750, 1)
+        setProgress(1 - (1 - time) ** 3)
+        if (time < 1) frame = requestAnimationFrame(animate)
+      }
+      frame = requestAnimationFrame(animate)
+    }, { threshold: .2 })
+    const finishOnReducedMotion = () => {
+      if (!motion.matches) return
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+      setProgress(1)
+    }
+    observer.observe(section)
+    motion.addEventListener('change', finishOnReducedMotion)
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+      motion.removeEventListener('change', finishOnReducedMotion)
+    }
+  }, [])
+
   return <section className="vulcan-brand" aria-labelledby="brand-title">
     <img className="brand-backdrop" src={`${import.meta.env.BASE_URL}artwork/brand-kitchen.webp`} alt="" loading="lazy" />
     <div className="shell brand-content">
@@ -166,9 +204,12 @@ function VulcanBrand() {
           <h3>Designing for Long-Term Success</h3>
           <p>Vulcan Catering Equipment supplies commercial kitchen and laundry equipment. Explore both ranges to find equipment suited to the way your team works.</p>
         </article>
-        <dl className="brand-stats" aria-describedby="brand-figure-note">
-          {companyFigures.map(([figure, label]) => <div key={label}>
-            <dt>{label}</dt><dd>{figure}</dd>
+        <dl ref={statistics} className="brand-stats" aria-describedby="brand-figure-note">
+          {companyFigures.map(([figure, suffix, label]) => <div key={label}>
+            <dt>{label}</dt><dd>
+              <span className="sr-only">{figureFormat.format(figure)}{suffix}</span>
+              <span aria-hidden="true">{figureFormat.format(Math.floor(figure * progress))}{suffix}</span>
+            </dd>
           </div>)}
         </dl>
       </div>
@@ -206,10 +247,11 @@ function App() {
         <Route path="/" element={<KitchenHome />} />
         <Route path="/equipment/bundles/:bundleId?" element={<EquipmentBundles />} />
         <Route path="/equipment/:divisionId?/:brandId?/:categoryId?/:productId?" element={<Catalogue />} />
-        <Route path="/rentals" element={<Rentals />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/enquiries" element={<Enquiries />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/rentals" element={<ComingSoon title="Equipment Rentals" />} />
+        <Route path="/gallery" element={<ComingSoon title="Gallery" />} />
+        <Route path="/enquiries/contact" element={<Enquiries />} />
+        <Route path="/enquiries" element={<ComingSoon title="Enquiries" />} />
+        <Route path="/about" element={<ComingSoon title="About Vulcan" />} />
         <Route path="/search" element={<Search />} />
         <Route path="/cart" element={<EquipmentCart />} />
         <Route path="*" element={<section className="catalogue"><h1>Page unavailable</h1><Link className="quote" to="/equipment">Browse equipment</Link></section>} />

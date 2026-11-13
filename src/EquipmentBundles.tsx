@@ -20,18 +20,36 @@ export function EquipmentBundles() {
   const filter = filters.find(item => item.id === params.get('filter')) ?? filters[0]
   const results = bundles.filter(filter.matches)
   const bundle = bundles.find(item => item.id === bundleId)
+  const size = params.get('size')
+  const upcoming = size === 'medium' || size === 'large' ? size : null
 
   return <section className="discovery-page bundles-page">
     <Link className="catalogue-back" to="/">← Back to home</Link>
     <nav className="bundle-breadcrumb" aria-label="Breadcrumb">
       <Link to="/equipment">Equipment</Link> <span aria-hidden="true">/</span>{' '}
-      {bundleId ? <><Link to="/equipment/bundles">Equipment Bundles</Link> <span aria-hidden="true">/</span> <span aria-current="page">{bundle?.name ?? 'Bundle unavailable'}</span></>
-        : <span aria-current="page">Equipment Bundles</span>}
+      {bundleId ? <><Link to="/equipment/bundles">Quick Set-Up</Link> <span aria-hidden="true">/</span> <span aria-current="page">{bundle?.name ?? 'Bundle unavailable'}</span></>
+        : <span aria-current="page">Quick Set-Up</span>}
     </nav>
     {bundleId ? bundle ? <BundleDetails key={bundle.id} bundle={bundle} /> : <>
       <h1>Bundle unavailable</h1><Link className="quote" to="/equipment/bundles">Browse bundles</Link>
     </> : <>
-      <header><h1>Equipment Bundles</h1><p>Shop complete equipment packages or ask Vulcan about advertised rental options.</p></header>
+      <header><h1>Quick Set-Up</h1><p>Build your ideal laundry setup.</p></header>
+      <div className="setup-sizes" role="group" aria-label="Set-up size">
+        {(['small', 'medium', 'large'] as const).map(option =>
+          <button key={option} type="button" className="save-equipment" aria-pressed={(upcoming ?? 'small') === option}
+            onClick={() => setParams(current => {
+              const next = new URLSearchParams(current)
+              next.set('size', option)
+              return next
+            })}>{option}</button>)}
+      </div>
+      {upcoming ? <section className="coming-soon setup-upcoming">
+        <h2>{upcoming === 'medium' ? 'Medium Set-Up — Coming Soon!' : 'Large Set-Up — Coming Soon!'}</h2>
+        <p>{upcoming === 'medium'
+          ? 'Looking for a medium-sized laundry solution? Our team can help you find the right equipment for your business.'
+          : 'Planning a large commercial laundry operation? Contact our specialists for a tailored equipment solution.'}</p>
+        <Link className="quote" to={`/enquiries/contact?topic=${upcoming}`}>Enquire Now</Link>
+      </section> : <>
       <div className="brand-nav bundle-filters" role="group" aria-label="Bundle filters">{filters.map(item =>
         <button key={item.id} type="button" className="save-equipment" aria-pressed={filter.id === item.id}
           onClick={() => setParams(item.id ? { filter: item.id } : {})}>{item.label}</button>)}</div>
@@ -48,6 +66,7 @@ export function EquipmentBundles() {
           </div>
         </Link>)}</div> : <p>No bundles match this filter. <button className="save-equipment" onClick={() => setParams({})}>View all bundles</button></p>}
       {results.length > 0 && <p className="source-note">{offerNote}</p>}
+      </>}
     </>}
   </section>
 }

@@ -27,11 +27,11 @@ function Symbol({ kind }: { kind: Icon }) {
 const destinations = [
   { title: 'Laundry Equipment', caption: 'Miele and Sharing', to: '/equipment/laundry', icon: 'laundry' },
   { title: 'Cooking Equipment', caption: 'Coming Soon', to: '/equipment/cooking', icon: 'cooking' },
-  { title: 'Equipment Rentals', caption: 'Rental solutions', to: '/rentals', icon: 'rentals' },
-  { title: 'Equipment Bundles', caption: 'Purchase and rental options', to: '/equipment/bundles', icon: 'bundles' },
-  { title: 'Gallery', caption: 'Projects & Team', to: '/gallery', icon: 'gallery' },
-  { title: 'Enquiries', caption: 'Ask Our Specialists', to: '/enquiries', icon: 'enquiries' },
-  { title: 'About Vulcan', caption: 'Branches & Company', to: '/about', icon: 'about' },
+  { title: 'Equipment Rentals', caption: 'Coming Soon', to: '/rentals', icon: 'rentals' },
+  { title: 'Quick Set-Up', caption: 'Build your ideal laundry setup', to: '/equipment/bundles', icon: 'bundles' },
+  { title: 'Gallery', caption: 'Coming Soon', to: '/gallery', icon: 'gallery' },
+  { title: 'Enquiries', caption: 'Coming Soon', to: '/enquiries', icon: 'enquiries' },
+  { title: 'About Vulcan', caption: 'Coming Soon', to: '/about', icon: 'about' },
 ] as const
 
 export function NavigationTools() {
@@ -47,8 +47,13 @@ export function ExploreVulcan() {
   return <div className="discovery-home">
     <section className="shell explore-vulcan" aria-labelledby="explore-title">
       <h2 id="explore-title">Explore Vulcan</h2>
+      <section className="quick-setup-feature" aria-labelledby="quick-setup-title">
+        <span className="discovery-icon"><EquipmentIcon kind="laundry" /></span>
+        <div><h3 id="quick-setup-title">Quick Set-Up</h3><p>Build your ideal laundry setup.</p></div>
+        <Link className="quote" to="/equipment/bundles">Explore Quick Set-Up</Link>
+      </section>
       <div className="discovery-grid">
-        {destinations.map(({ title, caption, to, icon }) => <Link key={to} to={to} className="discovery-card" data-icon={icon}>
+        {destinations.filter(item => item.icon !== 'bundles').map(({ title, caption, to, icon }) => <Link key={to} to={to} className="discovery-card" data-icon={icon}>
           <span className="discovery-icon">{icon === 'laundry' || icon === 'cooking' ? <EquipmentIcon kind={icon} /> : <Symbol kind={icon} />}</span>
           <span className="discovery-arrow" aria-hidden="true">↗</span>
           <strong>{title}</strong><span>{caption}</span>
@@ -58,7 +63,7 @@ export function ExploreVulcan() {
     <EquipmentBrandTrain />
     <section className="shell discovery-enquiry" aria-labelledby="enquiry-title">
       <div><h2 id="enquiry-title">Looking for something specific?</h2><p>Tell us what you need for your kitchen, laundry or next project.</p></div>
-      <Link className="quote" to="/enquiries">Ask our specialists <span aria-hidden="true">↗</span></Link>
+      <Link className="quote" to="/enquiries/contact">Ask our specialists <span aria-hidden="true">↗</span></Link>
     </section>
   </div>
 }
@@ -81,6 +86,15 @@ function DiscoveryPage({ title, intro, children }: { title: string; intro: strin
     <header><h1>{title}</h1><p>{intro}</p></header>
     {children}
   </section>
+}
+
+export function ComingSoon({ title }: { title: string }) {
+  return <DiscoveryPage title={title} intro="">
+    <section className="coming-soon">
+      <h2>Coming Soon</h2>
+      <Link className="quote" to="/enquiries/contact">Contact Vulcan</Link>
+    </section>
+  </DiscoveryPage>
 }
 
 export function Rentals() {
@@ -115,10 +129,16 @@ export function About() {
 
 export function Enquiries() {
   const [params] = useSearchParams()
+  const topic = params.get('topic')
+  const setup = topic === 'medium' ? 'Medium' : topic === 'large' ? 'Large' : null
   return <DiscoveryPage title="Enquiries" intro="Ask about equipment, rentals, project planning or technical support.">
+    {setup && <section className="bundle-panel">
+      <h2>{setup} laundry set-up enquiry</h2>
+      <QuoteEmailForm subject={`${setup} laundry set-up enquiry`} items={[`Requested set-up: ${setup}`]} />
+    </section>}
     <div className="enquiry-options">
       <section className="discovery-card contact-card"><strong>Equipment and projects</strong><p>Include the equipment type or model and your project location when you get in touch.</p>
-        <a className="quote" href={`mailto:${email}?subject=${encodeURIComponent(params.get('topic') === 'rentals' ? 'Equipment rental enquiry' : 'Equipment enquiry')}`}>Open email draft ↗</a>
+        <a className="quote" href={`mailto:${email}?subject=${encodeURIComponent(params.get('topic') === 'rentals' ? 'Equipment rental enquiry' : params.get('topic') === 'medium' ? 'Medium laundry set-up enquiry' : params.get('topic') === 'large' ? 'Large laundry set-up enquiry' : 'Equipment enquiry')}`}>Open email draft ↗</a>
         <a href={dial(contacts[0][1])}>{contacts[0][1]}</a>
       </section>
       <section className="discovery-card contact-card"><strong>Technical support</strong><p>For service and after-sales assistance, contact the National Service Desk.</p><a href={dial(service)}>{service}</a></section>
@@ -187,7 +207,7 @@ export function Search() {
       {hits.length ? `${hits.length} ${hits.length === 1 ? 'result' : 'results'}${correction ? ' for “' + correction + '”' : ''}`
         : 'We couldn’t find matching equipment. Try a brand, model or equipment type.'}
     </p>}
-    {value.trim() && !hits.length && <Link className="quote" to="/enquiries">Contact Vulcan for assistance</Link>}
+    {value.trim() && !hits.length && <Link className="quote" to="/enquiries/contact">Contact Vulcan for assistance</Link>}
     <div className="search-results">
       {hits.map(({ entry, model }) => {
         const { to, image, product } = entry.data
@@ -298,6 +318,6 @@ export function EquipmentCart() {
         {requestQuote && <><h2>Request a Purchase Quote</h2><QuoteEmailForm subject="Vulcan equipment purchase quote" items={quoteItems} /></>}
       </section>
     </>}
-    <div className="company-links"><Link className="quote" to="/equipment/bundles">Browse bundles</Link><Link to="/search">Find equipment ↗</Link><Link to="/enquiries">Make an enquiry ↗</Link></div>
+    <div className="company-links"><Link className="quote" to="/equipment/bundles">Browse bundles</Link><Link to="/search">Find equipment ↗</Link><Link to="/enquiries/contact">Make an enquiry ↗</Link></div>
   </DiscoveryPage>
 }

@@ -77,12 +77,19 @@ export function CompanyFooter() {
             <div><dt><Icon name="phone" />Head Office</dt><dd><a href="tel:0112498500">011 249 8500</a></dd></div>
             <div><dt><Icon name="phone" />National Service Desk</dt><dd><a href="tel:0860000309">0860 000 309</a></dd></div>
           </dl>
-          <div className="footer-socials">{socials.map(({ name, href, viewBox, path }) => <a href={href} aria-label={name} key={name}>
-            <svg aria-hidden="true" viewBox={viewBox} fill="currentColor"><path d={path} /></svg>
-          </a>)}</div>
+          {socials.filter(item => item.name === 'LinkedIn').map(({ href, name }) => <a className="footer-linkedin" key={name} href={href}>{name}</a>)}
         </section>
       </div>
     </div>
+    <section className="shell follow-us" aria-labelledby="follow-us-title">
+      <h2 id="follow-us-title">FOLLOW US</h2>
+      <div className="follow-us-tiles">
+        {socials.filter(item => item.name !== 'LinkedIn').map(({ name, href, viewBox, path }) =>
+          <a href={href} aria-label={name} title={name} key={name} data-platform={name}>
+            <svg aria-hidden="true" viewBox={viewBox} fill="currentColor"><path d={path} /></svg>
+          </a>)}
+      </div>
+    </section>
     <div className="footer-partners" aria-label="Partners and certifications">
       <LogoTrain logos={logos.map(([name, file]) => ({ name, src: `${import.meta.env.BASE_URL}footer/${file}` }))} />
     </div>
