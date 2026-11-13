@@ -426,12 +426,6 @@
 @media(max-width: 680px) {
   .shell { width: calc(100% - 32px); }
   .home-hero { padding-top: 51px; }
-  .home-hero .stage { width: 164%; }
-  .home-hero {
-    --masthead-curve: polygon(0 0,100% 0,100% 35%,90% 34%,82% 35%,76% 38%,70% 45%,65% 54%,60% 64%,55% 73%,49% 79%,42% 82%,34% 83%,25% 85%,16% 90%,8% 95%,0 100%);
-  }
-  .hero-masthead { height: clamp(143px, 30vw, 183px); }
-  .hero-corner { width: 24%; height: 70px; }
   .hero-nav { inset: 3px 16px auto; }
   .hero-nav .equipment-nav { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
   .hero-nav a { justify-content: center; gap: 6px; font-size: .8rem; }
@@ -544,22 +538,12 @@
   .home-hero :is(.chef,.chef-target,.flare-anchor,.chef-speech) { left: 20.6%; width: 33.2%; bottom: 4.7%; }
 }
 @media (max-width: 680px) {
-  .home-hero .scene {
-    overflow-x: auto;
-    scrollbar-width: none;
-    overscroll-behavior-inline: contain;
-  }
-  .home-hero .scene::-webkit-scrollbar { display: none; }
-  .speech-anchor { left: 59%; top: 15%; max-width: 53%; }
-  .speech { padding: 6px 8px; }
-  .home-hero .stage { width: 164%; }
   .hero-brand-track { inset: 52px 14px 0; }
   .hero-brand { width: min(69vw,410px); }
   .hero-nav { inset: 3px 15px auto; }
   .hero-nav .equipment-nav { gap: 12px; }
   .hero-nav a { font-size: .8rem; }
   .hero-nav a + a::before { left: -6px; }
-  .hero-masthead { height: clamp(140px,30vw,183px); }
   .hero-corner { width: 24%; height: 80px; }
   .secondary-row { flex-wrap: wrap; gap: 9px; padding: 10px 0; }
   .secondary-row .equipment-nav { gap: 13px; }
@@ -567,11 +551,6 @@
   .equipment-entry .equipment-choices { gap: 12px; }
 }
 
-@media(max-width:680px) {
-  .home-hero {
-    --masthead-curve: polygon(0 0,100% 0,100% 34%,94% 33%,88% 34%,83% 39%,79% 48%,75% 61%,70% 73%,64% 78%,56% 80%,48% 81%,39% 82%,30% 85%,21% 88%,12% 92%,6% 96%,0 100%);
-  }
-}
 
 
 

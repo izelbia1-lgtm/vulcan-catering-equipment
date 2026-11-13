@@ -1,4 +1,20 @@
 @media (max-width: 680px) {
+  .home-hero {
+    --masthead-curve: polygon(0 0, 100% 0, 100% 34%, 94% 33%, 88% 34%, 83% 39%, 79% 48%, 75% 61%, 70% 73%, 64% 78%, 56% 80%, 48% 81%, 39% 82%, 30% 85%, 21% 88%, 12% 92%, 6% 96%, 0 100%);
+  }
+
+  .hero-masthead {
+    height: clamp(140px, 30vw, 183px);
+    background: radial-gradient(ellipse at 57% 0%, #292b34, #15161d 78%);
+  }
+
+  /* Paint the red trim as a narrow ribbon over the dark surface. */
+  .hero-masthead::before {
+    inset: 0;
+    background: linear-gradient(95deg, #8c1b1c, #f45441 45%, #d82421 90%);
+    clip-path: polygon(0 97%, 6% 93%, 12% 89%, 21% 85%, 30% 82%, 39% 79%, 48% 78%, 56% 77%, 64% 75%, 70% 70%, 75% 58%, 79% 45%, 83% 36%, 88% 31%, 94% 30%, 100% 31%, 100% 34%, 94% 33%, 88% 34%, 83% 39%, 79% 48%, 75% 61%, 70% 73%, 64% 78%, 56% 80%, 48% 81%, 39% 82%, 30% 85%, 21% 88%, 12% 92%, 6% 96%, 0 100%);
+  }
+
   .home-hero .scene {
     overflow: clip;
   }
@@ -14,16 +30,16 @@
   }
 
   .home-hero .speech-anchor {
-    left: 92%;
-    top: 6%;
-    max-width: 24vw;
+    left: 82%;
+    top: -4%;
+    max-width: calc(100vw - 8px - 69.4vw);
   }
 
   .home-hero .speech {
     background: #0d0d0f;
     color: #fff;
     padding: 6px;
-    font-size: clamp(.75rem, 3.2vw, .875rem);
+    font-size: clamp(.75rem, 3.1vw, .875rem);
   }
 
   .home-hero .speech::after {

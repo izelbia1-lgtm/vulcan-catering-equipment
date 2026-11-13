@@ -52,7 +52,6 @@ dialog .quote{margin-top:10px}
   .header-row{display:grid;grid-template-columns:1fr auto;gap:8px 10px;padding-block:10px 6px}
   .header-row nav{grid-column:1/-1;grid-row:2}
   .header-row nav a{padding-inline:10px}
-  .stage{width:153%;margin:0}
 }
 @media(prefers-reduced-motion:no-preference){button{transition:background-color .16s,border-color .16s}}
 
