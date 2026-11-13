@@ -151,22 +151,7 @@ const companyFigures = [
 ]
 
 function VulcanBrand() {
-  const section = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const element = section.current
-    if (!element || matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return
-      element.classList.add('brand-in-view')
-      observer.disconnect()
-    }, { threshold: .15 })
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
-
-  return <section className="vulcan-brand" ref={section} aria-labelledby="brand-title">
+  return <section className="vulcan-brand" aria-labelledby="brand-title">
     <img className="brand-backdrop" src={`${import.meta.env.BASE_URL}artwork/brand-kitchen.webp`} alt="" loading="lazy" />
     <div className="shell brand-content">
       <div className="brand-heading">
