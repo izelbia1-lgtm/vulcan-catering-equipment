@@ -1,0 +1,20 @@
+.product-shopping {
+  display: grid;
+  gap: 12px;
+  padding: clamp(16px, 3vw, 28px);
+  margin-bottom: 24px;
+  background: var(--commerce-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.product-shopping :is(h2, .eyebrow, .model-number, .model-picker) { margin: 0; }
+.product-shopping .order-quantity { justify-self: start; }
+.product-price-note, .product-add-status { color: var(--quiet); font-size: .85rem; }
+.product-add { display: grid; gap: 4px; }
+.product-add-status { min-height: 1.3em; }
+.product-add .quote { min-height: 48px; width: 100%; }
+.product-add .quote:disabled { opacity: .6; cursor: default; }
+.product-secondary-action { display: grid; place-items: center; width: 100%; font-weight: 700; }
+.product-card-actions { display: grid; gap: 8px; margin-top: auto; padding: 0 14px 14px; }
+.product-card .card-photo { display: block; }

@@ -1,5 +1,27 @@
 import { useState, type FormEvent } from 'react'
-import { maxQuantity } from './cart'
+import { maxQuantity, productCartPath, useCart } from './cart'
+import type { Product } from './laundry'
+
+export function AddProductToCart({ product, model, quantity = 1 }: {
+  product: Product; model: string; quantity?: number
+}) {
+  const { lines, add } = useCart()
+  const [confirmed, setConfirmed] = useState(false)
+  const path = productCartPath(`/equipment/laundry/${product.brand}/${product.category}/${product.page}`, product, model)
+  const count = lines.find(line => line.path === path)?.quantity ?? 0
+  return <div className="product-add">
+    <button type="button" className="quote" disabled={count + quantity > maxQuantity} onClick={() => {
+      add(path, quantity)
+      setConfirmed(true)
+    }}>
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 4h3l3 11h10l3-8H6 M9 20h.01m8 0h.01" />
+      </svg>
+      Add to Cart
+    </button>
+    <span className="product-add-status" role="status">{confirmed && count > 0 && `${count} in quote basket`}</span>
+  </div>
+}
 
 export function Quantity({ value, onChange, label }: {
   value: number; onChange: (quantity: number) => void; label: string

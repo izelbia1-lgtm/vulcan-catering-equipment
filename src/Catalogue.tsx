@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getCapacityFacet, getFacets, getResults, transferableFilters } from './catalogue-filters'
-import { productCartPath, useCart } from './cart'
+import { AddProductToCart, Quantity } from './OrderControls'
+import './product-shopping.css'
 import { EquipmentIcon } from './EquipmentIcon'
 import { catalogueDivisions, catalogueMedia, laundryTypes, type Brand, type Category, type Product, type ProductModel } from './laundry'
 
 const root = '/equipment'
 const divisionHref = (id: string) => `${root}/${id}`
-function QuoteForm({ product, model, brand, dialog }: {
+function QuoteForm({ product, model, brand, dialog, quantity }: {
   product: Product
   model: ProductModel
   brand: string
+  quantity: number
   dialog: React.RefObject<HTMLDialogElement | null>
 }) {
   const [submitted, setSubmitted] = useState(false)
@@ -42,7 +44,7 @@ function QuoteForm({ product, model, brand, dialog }: {
             }} /></label>
           <label className="quote-wide">Product<input name="product" value={productLabel} readOnly /></label>
           <label>Model<input name="model" value={model.model} readOnly /></label>
-          <label>Quantity<input name="quantity" type="number" min="1" step="1" defaultValue="1" required /></label>
+          <label>Quantity<input key={quantity} name="quantity" type="number" min="1" step="1" defaultValue={quantity} required /></label>
           <label className="quote-wide">Additional requirements <span>(optional)</span><textarea name="requirements" rows={3} maxLength={2000} /></label>
         </div>
         <button className="quote" type="submit">Submit demonstration</button>
@@ -54,9 +56,7 @@ function ProductDetails({ product, brand }: { product: Product; brand: string })
   const [params, setParams] = useSearchParams()
   const { state } = useLocation()
   const model = product.models.find(item => item.model === params.get('variant')) ?? product.models[0]
-  const { lines, add } = useCart()
-  const cartPath = productCartPath(`/equipment/laundry/${product.brand}/${product.category}/${product.page}`, product, model.model)
-  const inCart = lines.some(line => line.path === cartPath)
+  const [quantity, setQuantity] = useState(1)
   const [photoIndex, setPhotoIndex] = useState(1)
   const dialog = useRef<HTMLDialogElement>(null)
   return <>
@@ -71,14 +71,19 @@ function ProductDetails({ product, brand }: { product: Product; brand: string })
         </div>}
       </div>
       <div>
+        <section className="product-shopping" aria-label="Shopping options">
         <p className="eyebrow">{brand}</p>
+        <h2>{product.name}</h2>
         {product.models.length > 1 ? <div className="model-picker"><label htmlFor="catalogue-model">Model</label>
           <select id="catalogue-model" value={model.model} onChange={event => setParams({ variant: event.currentTarget.value }, { replace: true, state })}>
             {product.models.map(variant => <option key={variant.model} value={variant.model}>{variant.model}</option>)}
           </select>
         </div> : <p className="model-number">{model.model}</p>}
-        <button className="quote" onClick={() => dialog.current?.showModal()}>Request a Quote <span aria-hidden="true">↗</span></button>
-        <button className="save-equipment" type="button" disabled={inCart} onClick={() => add(cartPath)}>{inCart ? 'Saved to cart' : 'Add to Cart'}</button>
+        <p className="product-price-note">Price on request · Quote basket</p>
+        <Quantity value={quantity} onChange={setQuantity} label="Product quantity" />
+        <AddProductToCart key={model.model} product={product} model={model.model} quantity={quantity} />
+        <button type="button" className="save-equipment product-secondary-action" onClick={() => dialog.current?.showModal()}>Request a Quote</button>
+        </section>
         <h3>Technical specifications</h3>
         <ul className="spec-list">{model.specs.map(spec => <li key={spec}>{spec}</li>)}</ul>
         {product.features?.length ? <>
@@ -97,7 +102,7 @@ function ProductDetails({ product, brand }: { product: Product; brand: string })
       })}
     </section>}
     <p className="source-note">Vulcan Laundry Equipment Catalogue, Edition 1 · PDF page {product.page}</p>
-    <QuoteForm product={product} model={model} brand={brand} dialog={dialog} />
+    <QuoteForm product={product} model={model} brand={brand} dialog={dialog} quantity={quantity} />
   </>
 }
 
@@ -188,16 +193,25 @@ function CategoryProducts({ category, categoryPath, brands }: { category: Catego
       {results.map(({ product, models }) => {
         const selected = models[0] !== product.models[0] ? new URLSearchParams({ variant: models[0].model }).toString() : ''
         const picked = comparison.find(item => item.product === product)
-        const card = <Link key={product.page} className="product-card" to={{ pathname: `${categoryPath}/${product.page}`, search: selected }} state={{ listSearch }}>
-          <div className="card-photo"><img src={catalogueMedia(product, 'photo')} alt="" loading="lazy" /></div>
-          <div className="card-copy">{brands && <span>{brands.find(brand => brand.id === product.brand)?.name}</span>}<strong>{product.name}</strong><span>{models.map(model => model.model).join(' · ')}</span></div>
-        </Link>
-        return brands ? <div className="comparison-card" key={product.page}>{card}
-          <label><input type="checkbox" checked={Boolean(picked)} disabled={!picked && comparison.length >= 3} onChange={event => {
+        const detail = { pathname: `${categoryPath}/${product.page}`, search: selected }
+        const brand = catalogueDivisions.find(division => division.id === 'laundry')?.brands.find(item => item.id === product.brand)
+        return <div className="comparison-card" key={product.page}>
+          <article className="product-card">
+            <Link className="card-photo" to={detail} state={{ listSearch }} aria-label={`View ${product.name}`}>
+              <img src={catalogueMedia(product, 'photo')} alt="" loading="lazy" />
+            </Link>
+            <div className="card-copy"><span>{brand?.name}</span><strong>{product.name}</strong><span>{models.map(model => model.model).join(' · ')}</span></div>
+            <div className="product-card-actions">
+              <p className="product-price-note">Price on request{product.models.length > 1 && <> · Adding {models[0].model}</>}</p>
+              <AddProductToCart key={models[0].model} product={product} model={models[0].model} />
+              <Link className="save-equipment product-secondary-action" to={detail} state={{ listSearch }}>View Details</Link>
+            </div>
+          </article>
+          {brands && <label><input type="checkbox" checked={Boolean(picked)} disabled={!picked && comparison.length >= 3} onChange={event => {
             const checked = event.currentTarget.checked
             setComparison(items => checked ? [...items, { product, model: models[0] }] : items.filter(item => item.product !== product))
-          }} /> Compare <span className="sr-only">{product.name}</span></label>
-        </div> : card
+          }} /> Compare <span className="sr-only">{product.name}</span></label>}
+        </div>
       })}
     </div> : <div className="coming-soon">
       <h3>No matching products</h3>

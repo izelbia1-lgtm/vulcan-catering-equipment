@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router'
 import { EquipmentIcon } from './EquipmentIcon'
 import { catalogueDivisions, catalogueMedia } from './laundry'
 import { bundles, bundlePath, money, VAT_PERCENT, type Bundle } from './bundles'
-import { useCart } from './cart'
+import { productCartPath, useCart } from './cart'
 import { Quantity, QuoteEmailForm } from './OrderControls'
 import { EquipmentBrandTrain } from './EquipmentBrandTrain'
 import './discovery.css'
@@ -158,7 +158,7 @@ export function Search() {
           <img src={catalogueMedia(product, 'photo')} alt="" loading="lazy" />
           <span><strong>{brand} {product.name}</strong><small>{product.models.map(model => model.model).join(' · ')}</small></span>
         </Link>
-        <button type="button" className="save-equipment" disabled={lines.some(line => line.path === to)} onClick={() => add(to)}>{lines.some(line => line.path === to) ? 'Saved' : 'Save to cart'}</button>
+        <button type="button" className="save-equipment" disabled={lines.some(line => line.path === productCartPath(to, product, product.models[0].model))} onClick={() => add(to)}>{lines.some(line => line.path === productCartPath(to, product, product.models[0].model)) ? 'Saved' : 'Save to cart'}</button>
       </div>)}
     </div>
   </DiscoveryPage>
