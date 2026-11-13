@@ -1,10 +1,11 @@
 import { useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { EquipmentIcon } from './EquipmentIcon'
-import { catalogueDivisions, catalogueMedia } from './laundry'
+import { catalogueDivisions, catalogueMedia, laundryTypes } from './laundry'
 import { bundles, bundlePath, money, VAT_PERCENT, type Bundle } from './bundles'
-import { productCartPath, useCart } from './cart'
-import { Quantity, QuoteEmailForm } from './OrderControls'
+import { useCart } from './cart'
+import { createEquipmentSearch, type SearchEntry } from './equipment-search'
+import { AddProductToCart, Quantity, QuoteEmailForm } from './OrderControls'
 import { EquipmentBrandTrain } from './EquipmentBrandTrain'
 import './discovery.css'
 
@@ -131,40 +132,77 @@ const searchProducts = catalogueDivisions.flatMap(division => division.brands.fl
     to: `/equipment/${division.id}/${brand.id}/${category.id}/${product.page}`,
   }))),
 ))
-const matches = (query: string, content: string) => query.split(/\s+/).every(word => content.toLowerCase().includes(word))
+type SearchDestination = { to: string; image?: string; product?: (typeof searchProducts)[number]['product'] }
+const searchable: SearchEntry<SearchDestination>[] = [
+  ...searchProducts.map(({ product, brand, category, to }) => ({
+    label: `${brand} ${product.name}`, kind: 'Product' as const,
+    data: { to, product, image: catalogueMedia(product, 'photo') },
+    keywords: [category], models: product.models.map(model => model.model),
+    details: [...(product.features ?? []), ...product.models.flatMap(model => model.specs)],
+  })),
+  ...catalogueDivisions.flatMap(division => division.brands.map(brand => ({
+    label: brand.name, kind: 'Brand' as const, data: { to: `/equipment/${division.id}/${brand.id}` },
+  }))),
+  ...laundryTypes.map(category => ({
+    label: category.name, kind: 'Category' as const, data: { to: `/equipment/laundry/type/${category.id}` },
+  })),
+  ...destinations.map(page => ({
+    label: page.title, kind: 'Page' as const, data: { to: page.to }, keywords: [page.caption],
+  })),
+  ...bundles.map(bundle => ({
+    label: bundle.name, kind: 'Bundle' as const, data: { to: bundlePath(bundle.id), image: bundle.image },
+    details: [bundle.description, ...bundle.features, ...bundle.equipment.map(item => [item.name, item.spec].join(' '))],
+  })),
+]
+const searchEquipment = createEquipmentSearch(searchable)
+const resultPath = (path: string, model?: string) => model ? `${path}?variant=${encodeURIComponent(model)}` : path
 
 export function Search() {
   const [params, setParams] = useSearchParams()
+  const [suggesting, setSuggesting] = useState(false)
   const value = params.get('q') ?? ''
-  const query = value.trim().toLowerCase()
-  const pages = query ? destinations.filter(page => matches(query, page.title + ' ' + page.caption)) : []
-  const products = query ? searchProducts.filter(({ product, brand, category }) =>
-    matches(query, [product.name, brand, category, ...product.models.map(model => model.model)].join(' '))) : []
-  const { lines, add } = useCart()
-
-  const bundleResults = query ? bundles.filter(bundle => matches(query, [
-    bundle.name, bundle.description, ...bundle.equipment.map(item => [item.name, item.spec].join(' ')),
-  ].join(' '))) : []
-  const count = products.length + pages.length + bundleResults.length
+  const { hits, correction } = searchEquipment(value)
+  const suggestions = hits.slice(0, 6)
   return <DiscoveryPage title="Search Vulcan" intro="Search by product, brand, model number or service.">
-    <label className="discovery-search">Search<input type="search" value={value} onChange={event =>
-      setParams(event.target.value ? { q: event.target.value } : {}, { replace: true })} /></label>
-    {query && <p className="search-count" role="status">{count} {count === 1 ? 'result' : 'results'}</p>}
+    <div className="equipment-search-box" onBlur={event => {
+      if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setSuggesting(false)
+    }}>
+      <label className="discovery-search">Search<input type="search" value={value} onFocus={() => setSuggesting(true)}
+        onKeyDown={event => {
+          if (event.key === 'Escape' || event.key === 'Enter') setSuggesting(false)
+        }}
+        onChange={event => {
+          setSuggesting(true)
+          setParams(event.target.value ? { q: event.target.value } : {}, { replace: true })
+        }} /></label>
+      {suggesting && value.trim().length >= 2 && suggestions.length > 0 && <nav className="search-results search-suggestions" aria-label="Search suggestions">
+        {suggestions.map(({ entry, model }) => <Link className="search-result" key={entry.data.to} to={resultPath(entry.data.to, model)}>
+          {entry.data.image && <img src={entry.data.image} alt="" />}
+          <span><strong>{entry.label}</strong><small>{entry.kind}{model && ' · ' + model}</small></span>
+        </Link>)}
+      </nav>}
+    </div>
+    {correction && <p className="search-correction">Did you mean: <Link to={{ search: new URLSearchParams({ q: correction }).toString() }} onClick={() => setSuggesting(false)}>{correction}?</Link></p>}
+    {value.trim() && <p className="search-count" role="status">
+      {hits.length ? `${hits.length} ${hits.length === 1 ? 'result' : 'results'}${correction ? ' for “' + correction + '”' : ''}`
+        : 'We couldn’t find matching equipment. Try a brand, model or equipment type.'}
+    </p>}
+    {value.trim() && !hits.length && <Link className="quote" to="/enquiries">Contact Vulcan for assistance</Link>}
     <div className="search-results">
-      {pages.map(page => <Link key={page.to} className="search-result" to={page.to}><strong>{page.title}</strong><span>{page.caption}</span></Link>)}
-      {bundleResults.map(bundle => <Link key={bundle.id} className="search-result" to={bundlePath(bundle.id)}><img src={bundle.image} alt="" /><strong>{bundle.name}</strong></Link>)}
-      {products.map(({ product, brand, to }) => <div className="search-product" key={to}>
-        <Link className="search-result" to={to}>
-          <img src={catalogueMedia(product, 'photo')} alt="" loading="lazy" />
-          <span><strong>{brand} {product.name}</strong><small>{product.models.map(model => model.model).join(' · ')}</small></span>
+      {hits.map(({ entry, model }) => {
+        const { to, image, product } = entry.data
+        const selectedModel = model ?? product?.models[0].model
+        const link = <Link className="search-result" to={resultPath(to, model)}>
+          {image && <img src={image} alt="" loading="lazy" />}
+          <span><strong>{entry.label}</strong><small>{product ? selectedModel + ' · Price on request' : entry.kind}</small></span>
         </Link>
-        <button type="button" className="save-equipment" disabled={lines.some(line => line.path === productCartPath(to, product, product.models[0].model))} onClick={() => add(to)}>{lines.some(line => line.path === productCartPath(to, product, product.models[0].model)) ? 'Saved' : 'Save to cart'}</button>
-      </div>)}
+        return product && selectedModel ? <div className="search-product" key={to}>{link}
+          <AddProductToCart key={selectedModel} product={product} model={selectedModel} />
+        </div> : <div key={to}>{link}</div>
+      })}
     </div>
   </DiscoveryPage>
 }
-
-
 const purchasableBundles = bundles.filter(bundle => bundle.purchaseCents !== undefined)
 const cartItems = new Map<string, { name: string; image: string; bundle?: Bundle }>([
   ...purchasableBundles.map(bundle => [bundlePath(bundle.id), {

@@ -103,3 +103,16 @@
 }
 .discovery-home .discovery-enquiry .quote { background: #bd201d; color: #fff; }
 .discovery-home .discovery-enquiry .quote:hover { background: #ce211e; }
+
+.equipment-search-box { max-width: 36rem; }
+.search-suggestions { margin-top: 6px; }
+.search-suggestions .search-result { min-height: 44px; }
+.search-correction { margin-top: 12px; }
+.search-correction a { display: inline-flex; align-items: center; min-height: 44px; color: var(--red); text-decoration: underline; }
+.search-product .product-add { flex: none; padding: 8px 0; }
+.search-product .product-add-status:empty { display: none; }
+@media (max-width: 680px) {
+  .search-product { flex-wrap: wrap; padding: 0 10px 10px; }
+  .search-product > .search-result { flex-basis: 100%; }
+  .search-product .product-add { width: 100%; padding: 0; }
+}
