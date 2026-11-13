@@ -1,4 +1,35 @@
 @media (max-width: 680px) {
+  .home-hero .scene {
+    overflow: clip;
+  }
+
+  /* Pan the whole composition once in CSS. Every pose and effect shares this stage. */
+  .home-hero .stage {
+    width: 152%;
+    left: -6%;
+  }
+
+  .home-hero :is(.kitchen-object, .oven-hit, .kitchen-effects, .middle-oven) {
+    display: none;
+  }
+
+  .home-hero .speech-anchor {
+    left: 92%;
+    top: 6%;
+    max-width: 24vw;
+  }
+
+  .home-hero .speech {
+    background: #0d0d0f;
+    color: #fff;
+    padding: 6px;
+    font-size: clamp(.75rem, 3.2vw, .875rem);
+  }
+
+  .home-hero .speech::after {
+    content: none;
+  }
+
   .hero-nav {
     inset: 0 8px auto;
   }
