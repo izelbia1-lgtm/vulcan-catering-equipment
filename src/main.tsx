@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { useKitchenAnimation } from './animation'
 import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation } from 'react-router'
 import { CartProvider } from './cart'
-import { EquipmentBundles } from './EquipmentBundles'
+import { EquipmentBundles, QuickSetupChoice } from './EquipmentBundles'
 import { Catalogue } from './Catalogue'
 import { ComingSoon, Enquiries, EquipmentCart, ExploreVulcan, NavigationTools, Search } from './Discovery'
 import { paintFlare } from './flare'
@@ -245,6 +245,7 @@ function App() {
     <main id="main" className={home ? 'home-main' : 'shell commerce-theme'}>
       <Routes>
         <Route path="/" element={<KitchenHome />} />
+        <Route path="/quick-set-up" element={<QuickSetupChoice />} />
         <Route path="/equipment/bundles/:bundleId?" element={<EquipmentBundles />} />
         <Route path="/equipment/:divisionId?/:brandId?/:categoryId?/:productId?" element={<Catalogue />} />
         <Route path="/rentals" element={<ComingSoon title="Equipment Rentals" />} />

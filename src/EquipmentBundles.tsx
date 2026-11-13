@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router'
 import { bundlePath, bundles, money, type Bundle } from './bundles'
 import { useCart } from './cart'
 import { Quantity, QuoteEmailForm } from './OrderControls'
+import { EquipmentIcon } from './EquipmentIcon'
 import './bundles.css'
 
 const filters = [
@@ -14,48 +15,84 @@ const filters = [
 ]
 const offerNote = 'Advertised South African pricing, subject to confirmation by Vulcan. Export pricing available on request.'
 
+export function QuickSetupChoice() {
+  const [params] = useSearchParams()
+  return <section className="discovery-page bundles-page">
+    <Link className="catalogue-back" to="/">← Back to home</Link>
+    <header><h1>What are you setting up?</h1></header>
+    <div className="setup-choice-grid">
+      {(['laundry', 'kitchen'] as const).map(type => {
+        const next = new URLSearchParams(params)
+        next.set('setup', type)
+        return <Link key={type} className="discovery-card setup-choice" to={{ pathname: '/equipment/bundles', search: next.toString() }}>
+          <span className="discovery-icon"><EquipmentIcon kind={type === 'laundry' ? 'laundry' : 'cooking'} /></span>
+          <strong>{type === 'laundry' ? 'Laundry Set-Up' : 'Kitchen Set-Up'}</strong>
+          <span className="discovery-arrow" aria-hidden="true">↗</span>
+        </Link>
+      })}
+    </div>
+  </section>
+}
+
 export function EquipmentBundles() {
   const { bundleId } = useParams()
   const [params, setParams] = useSearchParams()
   const filter = filters.find(item => item.id === params.get('filter')) ?? filters[0]
-  const results = bundles.filter(filter.matches)
+  const results = bundles.filter(item => item.category === 'laundry' && filter.matches(item))
   const bundle = bundles.find(item => item.id === bundleId)
-  const size = params.get('size')
-  const upcoming = size === 'medium' || size === 'large' ? size : null
+  const kitchen = !bundleId && params.get('setup') === 'kitchen'
+  const sizeKey = kitchen ? 'kitchenSize' : 'size'
+  const requestedSize = params.get(sizeKey)
+  const size = requestedSize === 'medium' || requestedSize === 'large' ? requestedSize : 'small'
+  const upcoming = kitchen || size !== 'small'
+  const title = kitchen ? 'Kitchen Set-Up' : 'Laundry Set-Up'
+  const choiceParams = new URLSearchParams(params)
+  choiceParams.delete('setup')
+  const choice = { pathname: '/quick-set-up', search: choiceParams.toString() }
+  const listing = { pathname: '/equipment/bundles', search: params.toString() }
+
+  function selectFilter(value: string) {
+    setParams(current => {
+      const next = new URLSearchParams(current)
+      if (value) next.set('filter', value)
+      else next.delete('filter')
+      return next
+    })
+  }
 
   return <section className="discovery-page bundles-page">
-    <Link className="catalogue-back" to="/">← Back to home</Link>
+    <Link className="catalogue-back" to={bundleId ? listing : choice}>← {bundleId ? 'Back to Laundry Set-Up' : 'Back to Quick Set-Up'}</Link>
     <nav className="bundle-breadcrumb" aria-label="Breadcrumb">
-      <Link to="/equipment">Equipment</Link> <span aria-hidden="true">/</span>{' '}
-      {bundleId ? <><Link to="/equipment/bundles">Quick Set-Up</Link> <span aria-hidden="true">/</span> <span aria-current="page">{bundle?.name ?? 'Bundle unavailable'}</span></>
-        : <span aria-current="page">Quick Set-Up</span>}
+      <Link to={choice}>Quick Set-Up</Link> <span aria-hidden="true">/</span>{' '}
+      {bundleId ? <><Link to={listing}>Laundry Set-Up</Link> <span aria-hidden="true">/</span> <span aria-current="page">{bundle?.name ?? 'Bundle unavailable'}</span></>
+        : <span aria-current="page">{title}</span>}
     </nav>
     {bundleId ? bundle ? <BundleDetails key={bundle.id} bundle={bundle} /> : <>
       <h1>Bundle unavailable</h1><Link className="quote" to="/equipment/bundles">Browse bundles</Link>
     </> : <>
-      <header><h1>Quick Set-Up</h1><p>Build your ideal laundry setup.</p></header>
+      <header><h1>{title}</h1><p>{kitchen ? 'Choose a size for your commercial kitchen.' : 'Build your ideal laundry setup.'}</p></header>
       <div className="setup-sizes" role="group" aria-label="Set-up size">
         {(['small', 'medium', 'large'] as const).map(option =>
-          <button key={option} type="button" className="save-equipment" aria-pressed={(upcoming ?? 'small') === option}
+          <button key={option} type="button" className="save-equipment" aria-pressed={size === option}
             onClick={() => setParams(current => {
               const next = new URLSearchParams(current)
-              next.set('size', option)
+              next.set(sizeKey, option)
               return next
             })}>{option}</button>)}
       </div>
       {upcoming ? <section className="coming-soon setup-upcoming">
-        <h2>{upcoming === 'medium' ? 'Medium Set-Up — Coming Soon!' : 'Large Set-Up — Coming Soon!'}</h2>
-        <p>{upcoming === 'medium'
+        <h2>{size[0].toUpperCase() + size.slice(1)} Set-Up — Coming Soon!</h2>
+        <p>{kitchen ? 'Contact our specialists for help planning your commercial kitchen.' : size === 'medium'
           ? 'Looking for a medium-sized laundry solution? Our team can help you find the right equipment for your business.'
           : 'Planning a large commercial laundry operation? Contact our specialists for a tailored equipment solution.'}</p>
-        <Link className="quote" to={`/enquiries/contact?topic=${upcoming}`}>Enquire Now</Link>
+        <Link className="quote" to={`/enquiries/contact?topic=${kitchen ? 'kitchen-' : ''}${size}`}>Enquire Now</Link>
       </section> : <>
       <div className="brand-nav bundle-filters" role="group" aria-label="Bundle filters">{filters.map(item =>
         <button key={item.id} type="button" className="save-equipment" aria-pressed={filter.id === item.id}
-          onClick={() => setParams(item.id ? { filter: item.id } : {})}>{item.label}</button>)}</div>
+          onClick={() => selectFilter(item.id)}>{item.label}</button>)}</div>
       <p className="search-count" role="status">{results.length} {results.length === 1 ? 'bundle' : 'bundles'}</p>
       {results.length ? <div className="bundle-grid">{results.map(item =>
-        <Link className="discovery-card bundle-card" key={item.id} to={bundlePath(item.id)}>
+        <Link className="discovery-card bundle-card" key={item.id} to={{ pathname: bundlePath(item.id), search: params.toString() }}>
           <img src={item.image} alt="" width="1175" height="596" />
           <div>
             <p className="eyebrow">{item.category === 'laundry' ? 'Laundry Bundle' : 'Cooking Equipment Bundle'}</p>
@@ -64,7 +101,7 @@ export function EquipmentBundles() {
             {item.rental && <p>Rental option · {money(item.rental.monthlyCents)} per month excl. VAT</p>}
             <span className="bundle-card-action">View bundle ↗</span>
           </div>
-        </Link>)}</div> : <p>No bundles match this filter. <button className="save-equipment" onClick={() => setParams({})}>View all bundles</button></p>}
+        </Link>)}</div> : <p>No bundles match this filter. <button className="save-equipment" onClick={() => selectFilter('')}>View all bundles</button></p>}
       {results.length > 0 && <p className="source-note">{offerNote}</p>}
       </>}
     </>}

@@ -28,7 +28,7 @@ const destinations = [
   { title: 'Laundry Equipment', caption: 'Miele and Sharing', to: '/equipment/laundry', icon: 'laundry' },
   { title: 'Cooking Equipment', caption: 'Coming Soon', to: '/equipment/cooking', icon: 'cooking' },
   { title: 'Equipment Rentals', caption: 'Coming Soon', to: '/rentals', icon: 'rentals' },
-  { title: 'Quick Set-Up', caption: 'Build your ideal laundry setup', to: '/equipment/bundles', icon: 'bundles' },
+  { title: 'Quick Set-Up', caption: 'Laundry and kitchen setups', to: '/quick-set-up', icon: 'bundles' },
   { title: 'Gallery', caption: 'Coming Soon', to: '/gallery', icon: 'gallery' },
   { title: 'Enquiries', caption: 'Coming Soon', to: '/enquiries', icon: 'enquiries' },
   { title: 'About Vulcan', caption: 'Coming Soon', to: '/about', icon: 'about' },
@@ -50,7 +50,7 @@ export function ExploreVulcan() {
       <section className="quick-setup-feature" aria-labelledby="quick-setup-title">
         <span className="discovery-icon"><EquipmentIcon kind="laundry" /></span>
         <div><h3 id="quick-setup-title">Quick Set-Up</h3><p>Build your ideal laundry setup.</p></div>
-        <Link className="quote" to="/equipment/bundles">Explore Quick Set-Up</Link>
+        <Link className="quote" to="/quick-set-up">Explore Quick Set-Up</Link>
       </section>
       <div className="discovery-grid">
         {destinations.filter(item => item.icon !== 'bundles').map(({ title, caption, to, icon }) => <Link key={to} to={to} className="discovery-card" data-icon={icon}>
@@ -130,15 +130,18 @@ export function About() {
 export function Enquiries() {
   const [params] = useSearchParams()
   const topic = params.get('topic')
-  const setup = topic === 'medium' ? 'Medium' : topic === 'large' ? 'Large' : null
+  const kitchenSizes = { 'kitchen-small': 'Small', 'kitchen-medium': 'Medium', 'kitchen-large': 'Large' } as const
+  const kitchenSize = topic && Object.hasOwn(kitchenSizes, topic) ? kitchenSizes[topic as keyof typeof kitchenSizes] : null
+  const setup = kitchenSize ? `${kitchenSize} kitchen` : topic === 'medium' ? 'Medium laundry' : topic === 'large' ? 'Large laundry' : null
+  const subject = setup ? `${setup} set-up enquiry` : topic === 'rentals' ? 'Equipment rental enquiry' : 'Equipment enquiry'
   return <DiscoveryPage title="Enquiries" intro="Ask about equipment, rentals, project planning or technical support.">
     {setup && <section className="bundle-panel">
-      <h2>{setup} laundry set-up enquiry</h2>
-      <QuoteEmailForm subject={`${setup} laundry set-up enquiry`} items={[`Requested set-up: ${setup}`]} />
+      <h2>{subject}</h2>
+      <QuoteEmailForm key={subject} subject={subject} items={[`Requested set-up: ${setup}`]} />
     </section>}
     <div className="enquiry-options">
       <section className="discovery-card contact-card"><strong>Equipment and projects</strong><p>Include the equipment type or model and your project location when you get in touch.</p>
-        <a className="quote" href={`mailto:${email}?subject=${encodeURIComponent(params.get('topic') === 'rentals' ? 'Equipment rental enquiry' : params.get('topic') === 'medium' ? 'Medium laundry set-up enquiry' : params.get('topic') === 'large' ? 'Large laundry set-up enquiry' : 'Equipment enquiry')}`}>Open email draft ↗</a>
+        <a className="quote" href={`mailto:${email}?subject=${encodeURIComponent(subject)}`}>Open email draft ↗</a>
         <a href={dial(contacts[0][1])}>{contacts[0][1]}</a>
       </section>
       <section className="discovery-card contact-card"><strong>Technical support</strong><p>For service and after-sales assistance, contact the National Service Desk.</p><a href={dial(service)}>{service}</a></section>

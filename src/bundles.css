@@ -43,3 +43,14 @@
 @media (max-width: 760px) {
   .bundle-detail, .order-cart-layout { grid-template-columns: minmax(0,1fr); }
 }
+.setup-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: clamp(12px, 3vw, 24px);
+}
+
+.setup-choice.discovery-card {
+  min-height: clamp(124px, 18vw, 220px);
+  justify-content: center;
+  border-left: 4px solid var(--commerce-accent);
+}
