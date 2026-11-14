@@ -49,16 +49,8 @@
   stroke: #e52521;
 }
 .hero-masthead path { stroke-width: 4px; vector-effect: non-scaling-stroke; }
-.home-hero .hero-brand img {
-  /* Keep the metallic artwork above its baked-in lower sweep.
-     The masthead path supplies the continuous edge beneath the wordmark. */
-  clip-path: polygon(
-    0 0, 43% 0, 43% 18%, 100% 18%, 100% 65%,
-    75% 67%, 55% 69%, 39% 76%, 23% 84%, 10% 91%,
-    7% 91%, 5% 90%, 3% 88%, 2% 84%, 1% 79%, 0 74%
-  );
-}
-.masthead-narrow { display: none; }
+.home-hero .hero-contour { height: 100%; }
+.home-hero .hero-brand img { clip-path: url(#hero-wordmark-edge); }
 .header-row .wordmark, .secondary-wordmark { gap: 2px; }
 .header-row .brand-emblem { width: 33px; }
 .catalogue-home + .catalogue-back { margin-inline-start: 14px; }
@@ -67,10 +59,6 @@
   .hero-nav .equipment-nav > a { font-size: .77rem; }
   .hero-nav .equipment-nav > a .equipment-icon { font-size: 20px; }
   .hero-nav .equipment-nav a::before { display: none; }
-}
-@media (max-width: 680px) {
-  .masthead-wide { display: none; }
-  .masthead-narrow { display: block; }
 }
 
 .quick-setup-feature {

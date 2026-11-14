@@ -82,6 +82,37 @@ function Wordmark() {
 function KitchenHero() {
   const hero = useRef<HTMLElement>(null)
   const brand = useRef<HTMLHeadingElement>(null)
+  const [contour, setContour] = useState('')
+
+  useEffect(() => {
+    const section = hero.current
+    const image = brand.current?.querySelector('img')
+    if (!section || !image) return
+    const align = () => {
+      const bounds = section.getBoundingClientRect()
+      const logo = image.getBoundingClientRect()
+      const x = logo.left - bounds.left
+      const y = logo.top - bounds.top
+      const point = (px: number, py: number) => `${x + px * logo.width / 623} ${y + py * logo.height / 233}`
+      const width = bounds.width
+      const narrow = width <= 680
+      const end = narrow ? 45 : Math.max(58, width * .065)
+      const joinY = y + 163 * logo.height / 233
+      setContour([
+        `M -10 -10 H ${width + 10} V ${end + 1}`,
+        narrow
+          ? `C ${width * .78} ${end - 34}, ${width * .88} ${joinY}, ${point(495, 163)}`
+          : `C ${width * .64} ${end - 48}, ${width * .57} ${joinY}, ${point(495, 163)}`,
+        `C ${point(347, 163)}, ${point(176, 195)}, ${point(54, 219)}`,
+        `Q ${point(34, 223)}, -10 ${y + logo.height * .99} Z`,
+      ].join(' '))
+    }
+    const observer = new ResizeObserver(align)
+    observer.observe(section)
+    observer.observe(image)
+    align()
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const section = hero.current
@@ -136,9 +167,13 @@ function KitchenHero() {
   }, [])
 
   return <section className="home-hero" ref={hero} aria-labelledby="hero-brand">
-    <svg className="hero-masthead" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
-      <path className="masthead-wide" d="M-8 -8H1008V64C880 52 690 51 594 75C518 94 486 113 449 117C302 116 157 143 -8 198Z" />
-      <path className="masthead-narrow" d="M-8 -8H1008V64C928 55 855 54 807 103C774 146 738 170 670 174C427 174 225 181 -8 198Z" />
+    <svg className="hero-masthead hero-contour" aria-hidden="true">
+      <defs>
+        <clipPath id="hero-wordmark-edge" clipPathUnits="objectBoundingBox">
+          <path d="M0 0H1V.674H.795C.557 .674 .282 .815 .087 .923Q.05 .94 0 .957Z" />
+        </clipPath>
+      </defs>
+      <path d={contour} />
     </svg>
     <div className="hero-corner" aria-hidden="true" />
     <div className="hero-nav"><EquipmentNavigation /></div>
