@@ -86,8 +86,9 @@ function KitchenHero() {
         <img src={`${import.meta.env.BASE_URL}artwork/vulcan-approved-wordmark.webp`} alt="" width={623} height={233} />
       </h1>
       <div className="hero-nav"><EquipmentNavigation /></div>
-      <svg className="original-home-divider" viewBox="0 0 1000 36" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M-2 -4H1002V8C775 3 620 6 485 18S210 33 -2 33Z" />
+      <svg className="original-home-divider" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+        <path className="original-divider-surface" d="M0 0H1000V52H755C610 52 525 64 400 64C245 64 105 91 0 99Z" />
+        <path className="original-divider-edge" d="M0 99C105 91 245 80 400 80C525 80 610 52 755 52H1000" />
       </svg>
     </header>
     <div className="hero-corner" aria-hidden="true" />
