@@ -49,6 +49,15 @@
   stroke: #e52521;
 }
 .hero-masthead path { stroke-width: 4px; vector-effect: non-scaling-stroke; }
+.home-hero .hero-brand img {
+  /* Keep the metallic artwork above its baked-in lower sweep.
+     The masthead path supplies the continuous edge beneath the wordmark. */
+  clip-path: polygon(
+    0 0, 43% 0, 43% 18%, 100% 18%, 100% 65%,
+    75% 67%, 55% 69%, 39% 76%, 23% 84%, 10% 91%,
+    7% 91%, 5% 90%, 3% 88%, 2% 84%, 1% 79%, 0 74%
+  );
+}
 .masthead-narrow { display: none; }
 .header-row .wordmark, .secondary-wordmark { gap: 2px; }
 .header-row .brand-emblem { width: 33px; }
