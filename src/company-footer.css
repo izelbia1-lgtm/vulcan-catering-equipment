@@ -67,3 +67,20 @@
 .footer-contact + .quote { margin-top: 14px; }
 .company-footer dialog { color: #211f1c; }
 .company-footer dialog h2 { color: inherit; }
+
+.footer-credit {
+  background: #000;
+  color: #b8b8b8;
+  border-top: 1px solid #333;
+  padding: clamp(16px, 2.4vw, 24px) 16px;
+  text-align: center;
+  font-size: .875rem;
+}
+
+.footer-credit p { margin: 0; }
+.footer-credit p + p { margin-top: 4px; }
+.footer-credit a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}

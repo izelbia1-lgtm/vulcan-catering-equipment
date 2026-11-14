@@ -102,6 +102,10 @@ export function CompanyFooter() {
     <div className="footer-partners" aria-label="Partners and certifications">
       <LogoTrain logos={logos.map(([name, file]) => ({ name, src: `${import.meta.env.BASE_URL}footer/${file}` }))} />
     </div>
+    <div className="footer-credit">
+      <p>© 2026 Vulcan. All rights reserved.</p>
+      <p>Designed &amp; Developed by <a href="https://innerwork-digital-rr2x.vercel.app/" target="_blank" rel="noopener noreferrer">Innerwork Digital</a></p>
+    </div>
   </footer>
 }
 
