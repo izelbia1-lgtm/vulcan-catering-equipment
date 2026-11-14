@@ -1,3 +1,4 @@
+import { InstallApp } from './InstallApp'
 import { LogoTrain } from './EquipmentBrandTrain'
 import socials from './footer-socials.json'
 import './company-footer.css'
@@ -79,6 +80,7 @@ export function CompanyFooter() {
             <div><dt><Icon name="phone" />Head Office</dt><dd><a href="tel:0112498500">011 249 8500</a></dd></div>
             <div><dt><Icon name="phone" />National Service Desk</dt><dd><a href="tel:0860000309">0860 000 309</a></dd></div>
           </dl>
+          <InstallApp />
         </section>
       </div>
     </div>

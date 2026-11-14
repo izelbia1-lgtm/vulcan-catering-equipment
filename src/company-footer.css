@@ -63,3 +63,7 @@
   max-height: 52px;
   mix-blend-mode: normal;
 }
+
+.footer-contact + .quote { margin-top: 14px; }
+.company-footer dialog { color: #211f1c; }
+.company-footer dialog h2 { color: inherit; }
