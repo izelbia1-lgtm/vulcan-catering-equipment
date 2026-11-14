@@ -75,7 +75,7 @@ function EquipmentNavigation() {
 function Wordmark() {
   return <>
     <span className="brand-emblem" aria-hidden="true">V</span>
-    <span><strong>ULCAN</strong><small>CATERING EQUIPMENT</small></span>
+    <strong>ULCAN</strong>
   </>
 }
 
@@ -128,7 +128,7 @@ function KitchenHero() {
 
   return <section className="home-hero original-home-hero" aria-labelledby="hero-brand">
     <header className="original-home-header" ref={header}>
-      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment">
+      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan">
         <img ref={wordmark} src={`${import.meta.env.BASE_URL}artwork/vulcan-wordmark-clean.webp`} alt="" width={623} height={233} />
       </h1>
       <div className="hero-nav"><EquipmentNavigation /></div>
@@ -240,7 +240,7 @@ function App() {
     <a className="skip" href="#main">Skip to content</a>
     {!home && <header className="top">
       <div className="shell header-row">
-        <Link className="wordmark" to="/" aria-label="Vulcan Catering Equipment home"><Wordmark /></Link>
+        <Link className="wordmark" to="/" aria-label="Vulcan home"><Wordmark /></Link>
         <EquipmentNavigation />
       </div>
     </header>}

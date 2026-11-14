@@ -298,7 +298,7 @@ export function Catalogue() {
   const brandPath = byType ? typePath : brand ? `${divisionPath}/${brand.id}` : divisionPath
   const categoryPath = category ? `${brandPath}/${category.id}` : brandPath
   const missing = Boolean((divisionId && !division) || (brandId && !brand && !byType) || (byType && !category) || (categoryId && !category) || (productId && !product))
-  const title = missing ? 'Catalogue page unavailable' : product?.name ?? category?.name ?? brand?.name ?? division?.name ?? 'Vulcan Equipment'
+  const title = missing ? 'Catalogue page unavailable' : product?.name ?? category?.name ?? brand?.name ?? division?.name ?? 'Vulcan'
   const listSearch = product ? state?.listSearch ?? '' : search
   const parent = product ? { pathname: categoryPath, search: listSearch } : byType || brand && !category ? divisionPath : category ? brandPath : root
   const productBrand = product && division?.brands.find(item => item.id === product.brand)
