@@ -20,12 +20,32 @@ import './black-theme.css'
 
 function Kitchen() {
   const animation = useKitchenAnimation()
+  const fireAudio = useRef<HTMLAudioElement>(null)
   const tap = useRef<{ at: number; x: number; y: number } | null>(null)
   const [muted] = useState(() => {
     try { return localStorage.getItem('vulcan-kitchen-muted') === 'true' } catch { return false }
   })
 
+  useEffect(() => {
+    const audio = fireAudio.current
+    if (!audio || !animation.playing) return
+    return () => {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  }, [animation.playing])
+
+  function triggerFire() {
+    animation.triggerFire()
+    const audio = fireAudio.current
+    if (!muted && audio) {
+      audio.currentTime = 0
+      void audio.play().catch(() => {})
+    }
+  }
+
   return <section aria-label="Interactive kitchen" className="kitchen">
+    <audio ref={fireAudio} src={`${import.meta.env.BASE_URL}artwork/chef-fire-whoosh.wav`} preload="auto" />
     <div className="scene">
       <div className="stage">
         {animation.kitchen ? <img className="kitchen-image" src={animation.kitchen.src} alt="Illustrated Vulcan commercial kitchen" /> :
@@ -45,14 +65,14 @@ function Kitchen() {
           <button type="button" className="chef-target" aria-label="Chef and cooking station. Double-tap, or use Enter to play the fire reaction." aria-disabled={animation.playing} onClick={event => {
             if (animation.playing) return
             if (event.detail === 0) {
-              animation.triggerFire()
+              triggerFire()
               return
             }
             const now = performance.now()
             const previous = tap.current
             if (previous && now - previous.at <= 450 && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) <= 44) {
               tap.current = null
-              animation.triggerFire()
+              triggerFire()
             } else {
               tap.current = { at: now, x: event.clientX, y: event.clientY }
             }
