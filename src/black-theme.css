@@ -84,29 +84,31 @@
 
 .original-divider-edge {
   fill: none;
-  stroke: #ff483e;
+  stroke: url(#original-trim);
   stroke-width: 2.5px;
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 3px #ef1616);
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px #ef1616);
 }
 
 @media (min-width: 681px) {
-  .original-home-hero .kitchen { margin-top: -7.5vw; }
+  .original-home-hero .kitchen { margin-top: -11.5vw; }
 }
 
 @media (max-width: 680px) {
+  .original-home-hero .kitchen { margin-top: calc(-12px - min(9.4vw, 56px)); }
   .original-home-header {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
     padding: 0 14px 8px;
-    background: #080808;
+
   }
   .original-home-header .hero-nav {
     grid-row: 1;
     justify-self: stretch;
     margin: 0;
   }
-  .original-home-divider { inset: calc(100% - 1px) 0 auto; height: 20px; }
+
 }
 
 .header-row .wordmark, .secondary-wordmark { gap: 2px; }

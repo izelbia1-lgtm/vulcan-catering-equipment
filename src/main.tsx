@@ -80,15 +80,68 @@ function Wordmark() {
 }
 
 function KitchenHero() {
+  const header = useRef<HTMLElement>(null)
+  const wordmark = useRef<HTMLImageElement>(null)
+  const [shape, setShape] = useState({ edge: '', surface: '' })
+
+  useEffect(() => {
+    const element = header.current
+    const logo = wordmark.current
+    if (!element || !logo) return
+    const motion = matchMedia('(prefers-reduced-motion: reduce)')
+
+    function fade() {
+      if (!element) return
+      const { top, height } = element.getBoundingClientRect()
+      const progress = Math.min(1, Math.max(0, (-top / height - .1) / .8))
+      element.style.opacity = motion.matches ? '1' : String(1 - progress)
+    }
+
+    const layout = () => {
+      const bounds = element.getBoundingClientRect()
+      const image = logo.getBoundingClientRect()
+      const width = bounds.width
+      const x = image.left - bounds.left
+      const y = image.top - bounds.top
+      const point = (px: number, py: number) => `${x + image.width * px / 623} ${y + image.height * py / 233}`
+      const shoulder = Math.max(x + image.width + 26, width * .72)
+      const endY = width <= 680 ? y + image.height * .64 : Math.max(bounds.height * .49, 78)
+      const lower = `C ${point(85, 217)} ${point(256, 164)} ${point(495, 164)} C ${point(585, 164)} ${shoulder - 28} ${endY} ${shoulder} ${endY} H ${width + 4}`
+      setShape({
+        edge: `M ${point(257, 38)} C ${point(270, 8)} ${point(247, 7)} ${point(207, 8)} C ${point(66, 9)} ${point(41, 9)} ${point(19, 88)} C ${point(-5, 180)} ${point(1, 230)} ${point(54, 214)} ${lower}`,
+        surface: `M -4 -4 H ${width + 4} V ${endY} H ${shoulder} C ${shoulder - 28} ${endY} ${point(585, 164)} ${point(495, 164)} C ${point(256, 164)} ${point(85, 217)} ${point(54, 214)} Q ${point(16, 220)} -4 ${y + image.height} Z`,
+      })
+      fade()
+    }
+    const observer = new ResizeObserver(layout)
+    observer.observe(element)
+    observer.observe(logo)
+    layout()
+    window.addEventListener('scroll', fade, { passive: true })
+    motion.addEventListener('change', fade)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', fade)
+      motion.removeEventListener('change', fade)
+    }
+  }, [])
+
   return <section className="home-hero original-home-hero" aria-labelledby="hero-brand">
-    <header className="original-home-header">
+    <header className="original-home-header" ref={header}>
       <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment">
-        <img src={`${import.meta.env.BASE_URL}artwork/vulcan-approved-wordmark.webp`} alt="" width={623} height={233} />
+        <img ref={wordmark} src={`${import.meta.env.BASE_URL}artwork/vulcan-wordmark-clean.webp`} alt="" width={623} height={233} />
       </h1>
       <div className="hero-nav"><EquipmentNavigation /></div>
-      <svg className="original-home-divider" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
-        <path className="original-divider-surface" d="M0 0H1000V52H755C610 52 525 64 400 64C245 64 105 91 0 99Z" />
-        <path className="original-divider-edge" d="M0 99C105 91 245 80 400 80C525 80 610 52 755 52H1000" />
+      <svg className="original-home-divider" aria-hidden="true">
+        <defs>
+          <linearGradient id="original-trim">
+            <stop stopColor="#ff836b" />
+            <stop offset=".42" stopColor="#ff493e" />
+            <stop offset="1" stopColor="#e52521" />
+          </linearGradient>
+        </defs>
+        <path className="original-divider-surface" d={shape.surface} />
+        <path className="original-divider-edge" d={shape.edge} />
       </svg>
     </header>
     <div className="hero-corner" aria-hidden="true" />
