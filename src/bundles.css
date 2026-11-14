@@ -93,7 +93,7 @@
 
 .cart-bundle-summary p { flex: 1 1 12rem; color: var(--red); font-weight: 700; }
 .order-cart-line .cart-bundle-summary .bundle-actions { margin-top: 0; }
-.order-cart-totals dd { text-align: right; }
+.order-cart-totals dd { flex: none; text-align: right; white-space: nowrap; }
 
 @media (max-width: 420px) {
   .order-cart-layout {
