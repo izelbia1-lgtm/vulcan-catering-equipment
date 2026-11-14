@@ -162,7 +162,6 @@
   top: 12px;
   width: max-content;
   max-width: 100%;
-  opacity: var(--hero-brand-opacity, 1);
   gap: clamp(12px, 1.6vw, 26px);
   color: #fefefe;
   font-size: clamp(2.65rem, 6.85vw, 7.1rem);

@@ -80,108 +80,17 @@ function Wordmark() {
 }
 
 function KitchenHero() {
-  const hero = useRef<HTMLElement>(null)
-  const brand = useRef<HTMLHeadingElement>(null)
-  const [contour, setContour] = useState('')
-
-  useEffect(() => {
-    const section = hero.current
-    const image = brand.current?.querySelector('img')
-    if (!section || !image) return
-    const align = () => {
-      const bounds = section.getBoundingClientRect()
-      const logo = image.getBoundingClientRect()
-      const x = logo.left - bounds.left
-      const y = logo.top - bounds.top
-      const point = (px: number, py: number) => `${x + px * logo.width / 623} ${y + py * logo.height / 233}`
-      const width = bounds.width
-      const narrow = width <= 680
-      const end = narrow ? 45 : Math.max(58, width * .065)
-      const joinY = y + 163 * logo.height / 233
-      setContour([
-        `M -10 -10 H ${width + 10} V ${end + 1}`,
-        narrow
-          ? `C ${width * .78} ${end - 34}, ${width * .88} ${joinY}, ${point(495, 163)}`
-          : `C ${width * .64} ${end - 48}, ${width * .57} ${joinY}, ${point(495, 163)}`,
-        `C ${point(347, 163)}, ${point(176, 195)}, ${point(54, 219)}`,
-        `Q ${point(34, 223)}, -10 ${y + logo.height * .99} Z`,
-      ].join(' '))
-    }
-    const observer = new ResizeObserver(align)
-    observer.observe(section)
-    observer.observe(image)
-    align()
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const section = hero.current
-    const logo = brand.current
-    if (!section || !logo) return
-
-    const motion = matchMedia('(prefers-reduced-motion: reduce)')
-    const narrow = matchMedia('(max-width: 680px)')
-    let frame: number | undefined
-    let lastOpacity = ''
-
-    function update() {
-      frame = undefined
-      if (!section || !logo) return
-      const { top, height } = section.getBoundingClientRect()
-      const start = narrow.matches ? 38 : Math.min(68, height * .12)
-      const end = narrow.matches ? 106 : Math.min(245, height * .35)
-      const progress = Math.max(0, Math.min(1, (-top - start) / Math.max(1, end - start)))
-      const opacity = (1 - progress * progress * (3 - 2 * progress)).toFixed(3)
-      if (opacity !== lastOpacity) {
-        logo.style.setProperty('--hero-brand-opacity', opacity)
-        lastOpacity = opacity
-      }
-    }
-
-    function schedule() {
-      if (motion.matches || frame !== undefined) return
-      frame = requestAnimationFrame(update)
-    }
-
-    const updateMotion = () => {
-      if (motion.matches) {
-        if (frame !== undefined) cancelAnimationFrame(frame)
-        frame = undefined
-        logo.style.removeProperty('--hero-brand-opacity')
-        lastOpacity = ''
-      } else {
-        schedule()
-      }
-    }
-
-    updateMotion()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
-    motion.addEventListener('change', updateMotion)
-    return () => {
-      if (frame !== undefined) cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
-      motion.removeEventListener('change', updateMotion)
-    }
-  }, [])
-
-  return <section className="home-hero" ref={hero} aria-labelledby="hero-brand">
-    <svg className="hero-masthead hero-contour" aria-hidden="true">
-      <defs>
-        <clipPath id="hero-wordmark-edge" clipPathUnits="objectBoundingBox">
-          <path d="M0 0H1V.674H.795C.557 .674 .282 .815 .087 .923Q.05 .94 0 .957Z" />
-        </clipPath>
-      </defs>
-      <path d={contour} />
-    </svg>
-    <div className="hero-corner" aria-hidden="true" />
-    <div className="hero-nav"><EquipmentNavigation /></div>
-    <div className="hero-brand-track">
-      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment" ref={brand}>
+  return <section className="home-hero original-home-hero" aria-labelledby="hero-brand">
+    <header className="original-home-header">
+      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment">
         <img src={`${import.meta.env.BASE_URL}artwork/vulcan-approved-wordmark.webp`} alt="" width={623} height={233} />
       </h1>
-    </div>
+      <div className="hero-nav"><EquipmentNavigation /></div>
+      <svg className="original-home-divider" viewBox="0 0 1000 36" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-2 -4H1002V8C775 3 620 6 485 18S210 33 -2 33Z" />
+      </svg>
+    </header>
+    <div className="hero-corner" aria-hidden="true" />
     <Kitchen />
   </section>
 }
