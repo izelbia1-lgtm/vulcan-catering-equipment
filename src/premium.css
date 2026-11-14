@@ -100,7 +100,6 @@
   position: relative;
   isolation: isolate;
   background: var(--charcoal);
-  --masthead-curve: polygon(0 0, 100% 0, 100% 32%, 94% 30%, 86% 29%, 76% 29%, 69% 30%, 64% 32%, 60% 35%, 56% 40%, 52% 46%, 48% 54%, 44% 63%, 40% 70%, 36% 74%, 32% 75%, 27% 75%, 22% 77%, 17% 81%, 12% 86%, 8% 91%, 4% 96%, 0 100%);
 }
 .hero-masthead {
   position: absolute;
@@ -109,16 +108,7 @@
   height: clamp(154px, 17vw, 300px);
   pointer-events: none;
   background: linear-gradient(95deg, #a62020, #f45441 33%, #fa7964 45%, #e82d25 62%, #bd211d 91%);
-  clip-path: var(--masthead-curve);
-}
-.hero-masthead::before {
-  content: '';
-  position: absolute;
-  inset: -4px 0 4px;
-  clip-path: var(--masthead-curve);
-  background:
-    radial-gradient(ellipse at 8% 95%, #722f36 0%, #31252e 25%, transparent 56%),
-    radial-gradient(ellipse at 58% 0%, #343640 0%, #1d2028 38%, #16171e 72%);
+
 }
 .hero-corner {
   position: absolute;
@@ -481,16 +471,7 @@
 .kitchen-sink { left: 80.7%; top: 58.3%; width: 12.5%; height: 13.2%; }
 .kitchen-object[aria-disabled=true] { cursor: default; }
 
-.home-hero {
-  --masthead-curve: polygon(0 0,100% 0,100% 31%,94% 29%,87% 29%,80% 29%,75% 28.5%,70% 29%,65% 30%,60% 32%,56% 35%,52% 40%,48% 46%,44% 53%,40% 55%,36% 55%,32% 56%,28% 58%,23% 62%,19% 66%,14% 71%,10% 77%,6% 85%,0 98%);
-}
 .hero-masthead { height: clamp(178px,20.85vw,440px); }
-.hero-masthead::before {
-  inset: -5px 0 5px;
-  background:
-    radial-gradient(ellipse at 11% 97%, #6b2932 0%, #2c2029 25%, transparent 56%),
-    radial-gradient(ellipse at 57% -22%, #393840 0%, #171922 45%, #111219 82%);
-}
 .hero-corner { width: 27%; height: 17.4vw; }
 .hero-nav { top: 1.8vw; right: 2.2vw; }
 .hero-nav a { gap: clamp(8px,1vw,17px); font-size: clamp(.8rem,1.35vw,1.4rem); }

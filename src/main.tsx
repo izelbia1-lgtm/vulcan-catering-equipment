@@ -135,7 +135,10 @@ function KitchenHero() {
   }, [])
 
   return <section className="home-hero" ref={hero} aria-labelledby="hero-brand">
-    <div className="hero-masthead" aria-hidden="true" />
+    <svg className="hero-masthead" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+      <path className="masthead-wide" d="M-8 -8H1008V64C880 52 690 51 594 75C518 94 486 113 449 117C302 116 157 143 -8 198Z" />
+      <path className="masthead-narrow" d="M-8 -8H1008V64C928 55 855 54 807 103C774 146 738 170 670 174C427 174 225 181 -8 198Z" />
+    </svg>
     <div className="hero-corner" aria-hidden="true" />
     <div className="hero-nav"><EquipmentNavigation /></div>
     <div className="hero-brand-track">

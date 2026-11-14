@@ -41,8 +41,38 @@
 .setup-upcoming, .discovery-page > .coming-soon { margin-bottom: 18px; }
 .commerce-theme .order-cart-line article { border-top: 1px solid var(--line); }
 
+.home-hero .hero-masthead {
+  width: 100%;
+  background: none;
+  clip-path: none;
+  fill: var(--vulcan-black);
+  stroke: #e52521;
+}
+.hero-masthead path { stroke-width: 4px; vector-effect: non-scaling-stroke; }
+.masthead-narrow { display: none; }
+.header-row .wordmark, .secondary-wordmark { gap: 2px; }
+.header-row .brand-emblem { width: 33px; }
+.catalogue-home + .catalogue-back { margin-inline-start: 14px; }
+.speech {
+  background: #0d0d0f;
+  color: #fff;
+  font-family: Nunito, "Arial Rounded MT Bold", system-ui, sans-serif;
+  font-size: clamp(.9rem, 2.15vw, 1.25rem);
+  font-weight: 900;
+  box-shadow: inset 0 0 0 1px #ee514b80, 0 4px 12px #0005;
+}
+.speech::after { content: none; }
+@media (min-width: 681px) and (max-width: 1000px) {
+  .hero-nav .equipment-nav { gap: 10px; }
+  .hero-nav .equipment-nav > a { font-size: .77rem; }
+  .hero-nav .equipment-nav > a .equipment-icon { font-size: 20px; }
+  .hero-nav .equipment-nav a::before { display: none; }
+}
 @media (max-width: 680px) {
-  .hero-masthead { background: var(--vulcan-black); }
+  .masthead-wide { display: none; }
+  .masthead-narrow { display: block; }
+  .home-hero .speech-anchor { left: 76%; max-width: calc(34vw - 8px); }
+  .home-hero .speech { font-size: clamp(.86rem, 3.55vw, 1rem); padding: 7px 8px; }
 }
 
 .quick-setup-feature {
@@ -71,7 +101,7 @@
 .follow-us { padding-block: 22px 32px; border-top: 1px solid var(--vulcan-border); }
 .follow-us h2 { letter-spacing: .12em; }
 .follow-us-tiles { display: flex; flex-wrap: wrap; gap: clamp(12px, 3vw, 24px); }
-.follow-us-tiles a {
+.follow-us-tiles > * {
   display: grid;
   place-items: center;
   width: clamp(58px, 15vw, 92px);
@@ -82,9 +112,10 @@
 }
 .follow-us-tiles a[data-platform=Instagram] { background: linear-gradient(145deg, #802cc4, #bd185e 65%, #bd481c); }
 .follow-us-tiles a[data-platform=TikTok] { background: #183a3e; border: 1px solid #46e8dc; }
+.follow-us-tiles a[data-platform=LinkedIn] { background: #075d9a; }
+.follow-us-tiles [data-platform=YouTube] { background: #a81719; }
 .follow-us-tiles a:hover { color: white; }
 .follow-us-tiles svg { width: 45%; height: 45%; }
-.footer-linkedin { display: inline-block; padding-block: 10px; text-decoration: underline; }
 
 @media (prefers-reduced-motion: no-preference) {
   .follow-us-tiles a { transition: transform 180ms ease; }

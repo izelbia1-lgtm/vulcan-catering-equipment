@@ -52,6 +52,8 @@ function FooterLinks({ title, items }: { title: string; items: string[][] }) {
   </nav>
 }
 
+const youtubeChannel: string | undefined = undefined
+
 export function CompanyFooter() {
   return <footer className="company-footer">
     <section className="footer-branches" aria-label="Vulcan branches">
@@ -77,17 +79,22 @@ export function CompanyFooter() {
             <div><dt><Icon name="phone" />Head Office</dt><dd><a href="tel:0112498500">011 249 8500</a></dd></div>
             <div><dt><Icon name="phone" />National Service Desk</dt><dd><a href="tel:0860000309">0860 000 309</a></dd></div>
           </dl>
-          {socials.filter(item => item.name === 'LinkedIn').map(({ href, name }) => <a className="footer-linkedin" key={name} href={href}>{name}</a>)}
         </section>
       </div>
     </div>
     <section className="shell follow-us" aria-labelledby="follow-us-title">
       <h2 id="follow-us-title">FOLLOW US</h2>
       <div className="follow-us-tiles">
-        {socials.filter(item => item.name !== 'LinkedIn').map(({ name, href, viewBox, path }) =>
-          <a href={href} aria-label={name} title={name} key={name} data-platform={name}>
-            <svg aria-hidden="true" viewBox={viewBox} fill="currentColor"><path d={path} /></svg>
-          </a>)}
+        {['Facebook', 'Instagram', 'TikTok', 'YouTube', 'LinkedIn'].map(name => {
+          const account = socials.find(item => item.name === name)
+          if (account) return <a href={account.href} aria-label={name} title={name} key={name} data-platform={name}>
+            <svg aria-hidden="true" viewBox={account.viewBox} fill="currentColor"><path d={account.path} /></svg>
+          </a>
+          const icon = <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="4" fill="currentColor" /><path d="m10 8 6 4-6 4Z" fill="#a81719" /></svg>
+          return youtubeChannel
+            ? <a key={name} href={youtubeChannel} aria-label={name} data-platform={name}>{icon}</a>
+            : <span key={name} role="img" aria-label="YouTube channel awaiting confirmation" title="YouTube channel awaiting confirmation" data-platform={name}>{icon}</span>
+        })}
       </div>
     </section>
     <div className="footer-partners" aria-label="Partners and certifications">
