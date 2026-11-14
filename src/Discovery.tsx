@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { EquipmentIcon } from './EquipmentIcon'
 import { catalogueDivisions, catalogueMedia, laundryTypes } from './laundry'
-import { bundles, bundlePath, money, VAT_PERCENT, type Bundle } from './bundles'
+import { bundles, bundlePath, calculateVat, money, priceEquipment, selectedEquipment, VAT_PERCENT, type Bundle } from './bundles'
 import { useCart } from './cart'
 import { createEquipmentSearch, type SearchEntry } from './equipment-search'
 import { AddProductToCart, Quantity, QuoteEmailForm } from './OrderControls'
@@ -253,22 +253,21 @@ export function EquipmentCart() {
   const packages = items.flatMap(item => {
     const { bundle, bundleKey } = item
     if (!bundle || !bundleKey) return []
-    const equipment = bundle.equipment.map(component => ({
-      ...component, selected: item.equipment?.[component.name] ?? component.quantity,
-    }))
+    const equipment = selectedEquipment(bundle, item.equipment ?? {})
     const customised = equipment.some(component => component.selected !== component.quantity)
-    return [{ ...item, bundleKey, equipment, customised, cents: customised ? undefined : bundle.purchaseCents }]
+    return [{ ...item, bundleKey, equipment, customised, ...priceEquipment(bundle, equipment) }]
   })
   const products = items.filter(item => !item.bundle)
-  const subtotal = packages.reduce((total, item) => total + (item.cents ?? 0), 0)
-  const vat = Math.round(subtotal * VAT_PERCENT / 100)
-  const hasQuoteOnly = products.length > 0 || packages.some(item => item.cents === undefined)
+  const subtotal = packages.reduce((total, item) => total + item.cents, 0)
+  const vat = calculateVat(subtotal)
+  const hasQuoteOnly = products.length > 0 || packages.some(item => item.needsQuote)
   const quoteItems = [
     ...packages.flatMap((item, index) => [
       `Bundle ${index + 1} — ${item.name}`,
       ...item.equipment.map(component =>
         `  ${component.selected} × ${component.name}${component.spec ? ' · ' + component.spec : ''}${component.selected === 0 ? ' (removed)' : ''}`),
-      item.cents === undefined ? 'Updated quote required' : `Advertised bundle subtotal: ${money(item.cents)} excl. VAT, subject to confirmation`,
+      ...(item.needsQuote ? ['Updated quote required'] : []),
+      ...(item.cents > 0 ? [`${item.advertised ? 'Advertised bundle subtotal' : 'Priced equipment subtotal'}: ${money(item.cents)} excl. VAT, subject to confirmation`] : []),
       '',
     ]),
     ...(products.length ? ['Individual products', ...products.map(item => `${item.quantity} × ${item.name} (price on request)`)] : []),
@@ -278,34 +277,35 @@ export function EquipmentCart() {
     {items.length === 0 ? <p>Your trolley is empty.</p> : <>
       <div className="order-cart-layout">
         <div className="search-results">
-          {packages.map(({ path, name, image, bundleKey, equipment, customised, cents }, index) =>
+          {packages.map(({ path, name, image, bundleKey, equipment, customised, cents, needsQuote }, index) =>
             <article className="order-cart-line cart-bundle-group" key={bundleKey}>
               <Link className="search-result" to={path}><img src={image} alt="" /><h2>Bundle {index + 1} — {name}</h2></Link>
               <ul className="cart-bundle-components">
-                {equipment.map(component => <li key={component.name}>
-                  <div><strong>{component.name}</strong>{component.spec && <small>{component.spec}</small>}</div>
+                {equipment.map(component => <li className="cart-item-row" key={component.name}>
+                  <div><strong>{component.name}</strong>{component.spec && <small>{component.spec}</small>}<small>{component.unitCents === undefined ? 'Price on request' : money(component.unitCents) + ' each excl. VAT'}</small></div>
                   <Quantity min={0} value={component.selected} label={`quantity for ${component.name} in Bundle ${index + 1}`}
                     onChange={value => updateBundle(bundleKey, Object.fromEntries(equipment.map(item =>
                       [item.name, item.name === component.name ? value : item.selected])))} />
                 </li>)}
               </ul>
-              <p role="status">{cents === undefined ? 'Updated quote required' : `Bundle subtotal ${money(cents)} excl. VAT`}</p>
-              <div className="bundle-actions">
-                {customised && <button type="button" className="save-equipment" onClick={() => updateBundle(bundleKey, {})}>Restore original bundle</button>}
-                <button type="button" className="save-equipment" onClick={() => removeBundle(bundleKey)}>Remove Bundle {index + 1}</button>
+              <div className="cart-bundle-summary">
+                <p role="status">{needsQuote && 'Updated quote required. '}{!needsQuote || cents > 0 ? `${needsQuote ? 'Priced equipment subtotal' : 'Bundle subtotal'} ${money(cents)} excl. VAT` : null}</p>
+                <div className="bundle-actions">
+                  {customised && <button type="button" className="save-equipment" onClick={() => updateBundle(bundleKey, {})}>Restore original bundle</button>}
+                  <button type="button" className="save-equipment" onClick={() => removeBundle(bundleKey)}>Remove Bundle {index + 1}</button>
+                </div>
               </div>
             </article>)}
           {products.length > 0 && <section className="order-cart-line">
             <h2>Individual products</h2>
             {products.map(({ path, quantity, name, image }) =>
-          <article className="order-cart-line" key={path}>
-            <Link className="search-result" to={path}><img src={image} alt="" /><strong>{name}</strong></Link>
-            <p>Price on request</p>
-            <div className="bundle-actions">
-              <Quantity label={`quantity for ${name}`} value={quantity} onChange={value => setQuantity(path, value)} />
-              <button type="button" className="save-equipment" aria-label={`Remove ${name}`} onClick={() => setQuantity(path, 0)}>Remove</button>
-            </div>
-          </article>)}</section>}
+              <article className="cart-item-row cart-product-row" key={path}>
+                <div>
+                  <Link className="search-result" to={path}><img src={image} alt="" /><span><strong>{name}</strong><small>Price on request</small></span></Link>
+                  <button type="button" className="save-equipment" aria-label={`Remove ${name}`} onClick={() => setQuantity(path, 0)}>Remove</button>
+                </div>
+                <Quantity label={`quantity for ${name}`} value={quantity} onChange={value => setQuantity(path, value)} />
+              </article>)}</section>}
         </div>
         <section className="bundle-panel order-cart-totals" aria-label="Estimated trolley totals">
           <h2>{hasQuoteOnly ? subtotal > 0 ? 'Estimate for priced items' : 'Quote required' : 'Order estimate'}</h2>

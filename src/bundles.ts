@@ -8,7 +8,7 @@ export type Bundle = {
   purchaseCents?: number
   rental?: { monthlyCents: number; months: number; includes: string }
   warranty: string
-  equipment: { name: string; quantity: number; spec?: string }[]
+  equipment: { name: string; quantity: number; spec?: string; unitCents?: number }[]
   features: string[]
 }
 
@@ -44,3 +44,20 @@ export const bundlePath = (id: string) => '/equipment/bundles/' + id
 export const VAT_PERCENT = 15
 const currency = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' })
 export const money = (cents: number) => currency.format(cents / 100)
+
+export function selectedEquipment(bundle: Bundle, quantities: Record<string, number>) {
+  return bundle.equipment.map(item => ({ ...item, selected: quantities[item.name] ?? item.quantity }))
+}
+
+export function priceEquipment(bundle: Bundle, equipment: ReturnType<typeof selectedEquipment>) {
+  if (equipment.every(item => item.selected === item.quantity) && bundle.purchaseCents !== undefined) {
+    return { cents: bundle.purchaseCents, needsQuote: false, advertised: true }
+  }
+  return {
+    cents: equipment.reduce((total, item) => total + item.selected * (item.unitCents ?? 0), 0),
+    needsQuote: equipment.some(item => item.selected > 0 && item.unitCents === undefined),
+    advertised: false,
+  }
+}
+
+export const calculateVat = (cents: number) => Math.round(cents * VAT_PERCENT / 100)
