@@ -16,6 +16,7 @@ import './premium.css'
 import './commerce-theme.css'
 import './mobile.css'
 import './black-theme.css'
+import './home-wordmark.css'
 
 function Kitchen() {
   const animation = useKitchenAnimation()
@@ -34,7 +35,26 @@ function Kitchen() {
           {animation.frames.map((frame, index) => <img key={frame.src} className="chef" src={frame.src} alt="" hidden={index !== animation.frameIndex} />)}
           <PanFood index={animation.frameIndex} />
           <div className="chef-speech">
-            <div className="speech-anchor" role="status">{animation.speech && <span className="speech">OH FOR FOOD SAKE!</span>}</div>
+            <div className="speech-anchor" role="status">{animation.speech && <div className="speech">
+              <span className="sr-only">OH, FOR FOOD SAKE!</span>
+              <svg viewBox="0 0 330 194" aria-hidden="true">
+                <defs>
+                  <radialGradient id="speech-gold" cx=".48" cy=".43" r=".62">
+                    <stop stopColor="#fff2ac" />
+                    <stop offset=".73" stopColor="#ffe170" />
+                    <stop offset="1" stopColor="#efb72f" />
+                  </radialGradient>
+                </defs>
+                <path fill="url(#speech-gold)" stroke="#351708" strokeWidth="4" strokeLinejoin="round"
+                  d="M5 146 Q37 132 49 120 Q37 111 22 109 Q53 97 35 62 Q82 63 82 24 Q119 48 145 5 Q173 45 210 10 Q228 49 278 24 Q272 67 325 64 Q301 103 325 123 Q283 129 290 164 Q247 143 224 183 Q187 150 151 190 Q121 151 76 175 Q75 156 58 145 Q33 150 5 146Z" />
+                <path d="M59 82 Q78 53 116 48 Q79 60 59 82Z" fill="#fff3ba" />
+                <g textAnchor="middle" transform="rotate(-5 177 98)">
+                  <text x="180" y="88" fill="#351708" fontSize="40" textLength="164" lengthAdjust="spacingAndGlyphs">OH, FOR</text>
+                  <text x="177" y="138" fill="#e01914" stroke="#351708" strokeWidth="4" paintOrder="stroke" fontSize="52"
+                    textLength="236" lengthAdjust="spacingAndGlyphs">FOOD SAKE!</text>
+                </g>
+              </svg>
+            </div>}</div>
           </div>
           {animation.frameIndex >= 8 && animation.frameIndex <= 10 && <div className="flare-anchor" aria-hidden="true">
             <div className="flare" data-pose={animation.frameIndex + 1}>
@@ -79,73 +99,17 @@ function Wordmark() {
 }
 
 function KitchenHero() {
-  const hero = useRef<HTMLElement>(null)
-  const brand = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    const section = hero.current
-    const logo = brand.current
-    if (!section || !logo) return
-
-    const motion = matchMedia('(prefers-reduced-motion: reduce)')
-    const narrow = matchMedia('(max-width: 680px)')
-    let frame: number | undefined
-    let lastOpacity = ''
-
-    function update() {
-      frame = undefined
-      if (!section || !logo) return
-      const { top, height } = section.getBoundingClientRect()
-      const start = narrow.matches ? 38 : Math.min(68, height * .12)
-      const end = narrow.matches ? 106 : Math.min(245, height * .35)
-      const progress = Math.max(0, Math.min(1, (-top - start) / Math.max(1, end - start)))
-      const opacity = (1 - progress * progress * (3 - 2 * progress)).toFixed(3)
-      if (opacity !== lastOpacity) {
-        logo.style.setProperty('--hero-brand-opacity', opacity)
-        lastOpacity = opacity
-      }
-    }
-
-    function schedule() {
-      if (motion.matches || frame !== undefined) return
-      frame = requestAnimationFrame(update)
-    }
-
-    const updateMotion = () => {
-      if (motion.matches) {
-        if (frame !== undefined) cancelAnimationFrame(frame)
-        frame = undefined
-        logo.style.removeProperty('--hero-brand-opacity')
-        lastOpacity = ''
-      } else {
-        schedule()
-      }
-    }
-
-    updateMotion()
-    window.addEventListener('scroll', schedule, { passive: true })
-    window.addEventListener('resize', schedule)
-    motion.addEventListener('change', updateMotion)
-    return () => {
-      if (frame !== undefined) cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', schedule)
-      window.removeEventListener('resize', schedule)
-      motion.removeEventListener('change', updateMotion)
-    }
-  }, [])
-
-  return <section className="home-hero" ref={hero} aria-labelledby="hero-brand">
-    <svg className="hero-masthead" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
-      <path className="masthead-wide" d="M-8 -8H1008V64C880 52 690 51 594 75C518 94 486 113 449 117C302 116 157 143 -8 198Z" />
-      <path className="masthead-narrow" d="M-8 -8H1008V64C928 55 855 54 807 103C774 146 738 170 670 174C427 174 225 181 -8 198Z" />
-    </svg>
+  return <section className="home-hero home-hero-rectangular" aria-labelledby="hero-brand">
+    <header className="home-wordmark-header">
+      <div className="home-wordmark-row">
+        <h1 id="hero-brand" className="home-wordmark">
+          <img src={`${import.meta.env.BASE_URL}artwork/vulcan-rectangular-wordmark.png`}
+            alt="Vulcan Catering Equipment" width={116} height={41} />
+        </h1>
+        <EquipmentNavigation />
+      </div>
+    </header>
     <div className="hero-corner" aria-hidden="true" />
-    <div className="hero-nav"><EquipmentNavigation /></div>
-    <div className="hero-brand-track">
-      <h1 className="wordmark hero-brand" id="hero-brand" aria-label="Vulcan Catering Equipment" ref={brand}>
-        <img src={`${import.meta.env.BASE_URL}artwork/vulcan-approved-wordmark.webp`} alt="" width={623} height={233} />
-      </h1>
-    </div>
     <Kitchen />
   </section>
 }

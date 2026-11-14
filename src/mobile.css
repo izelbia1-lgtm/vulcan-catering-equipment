@@ -16,20 +16,9 @@
   }
 
   .home-hero .speech-anchor {
-    left: 82%;
-    top: -4%;
-    max-width: calc(100vw - 8px - 69.4vw);
-  }
-
-  .home-hero .speech {
-    background: #0d0d0f;
-    color: #fff;
-    padding: 6px;
-    font-size: clamp(.75rem, 3.1vw, .875rem);
-  }
-
-  .home-hero .speech::after {
-    content: none;
+    left: 75%;
+    top: -8%;
+    width: calc(34vw - 7px);
   }
 
   .hero-nav {
