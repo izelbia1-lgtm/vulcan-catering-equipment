@@ -48,8 +48,12 @@ export function ExploreVulcan() {
     <section className="shell explore-vulcan" aria-labelledby="explore-title">
       <h2 id="explore-title">Explore Vulcan</h2>
       <section className="quick-setup-feature" aria-labelledby="quick-setup-title">
-        <span className="discovery-icon"><EquipmentIcon kind="laundry" /></span>
-        <div><h3 id="quick-setup-title">Quick Set-Up</h3><p>Build your ideal laundry setup.</p></div>
+        <span className="discovery-icon">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M7 4.9a1 1 0 0 1 1.53-.85l11.1 7.1a1 1 0 0 1 0 1.7l-11.1 7.1A1 1 0 0 1 7 19.1Z" />
+          </svg>
+        </span>
+        <div><h3 id="quick-setup-title">Quick Set-Up</h3><p>Build your ideal set up</p></div>
         <Link className="quote" to="/quick-set-up">Explore Quick Set-Up</Link>
       </section>
       <div className="discovery-grid">
